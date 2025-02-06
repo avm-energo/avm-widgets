@@ -1,0 +1,139 @@
+cmake_minimum_required(VERSION 3.14)
+
+project(avm-widgets LANGUAGES CXX
+  DESCRIPTION "Widgets library for AVM-Energo C++ projects"
+  VERSION 1.0.0)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_BINARY_DIR}")
+
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+# Getting CMake system name
+string(TOLOWER "${CMAKE_SYSTEM_NAME}" SYSTEM_NAME)
+
+if(SYSTEM_NAME STREQUAL "linux")
+    message(STATUS "Compiling for linux")
+    add_compile_definitions(SYSTEM_TYPE=0)
+elseif(SYSTEM_NAME STREQUAL "windows")
+    message(STATUS "Compiling for windows")
+    add_compile_definitions(SYSTEM_TYPE=1)
+else()
+    message(STATUS "Compiling for unknown")
+    add_compile_definitions(SYSTEM_TYPE=2)
+endif()
+
+# Setup build type if it's not specified
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type" FORCE)
+  message(STATUS "CMAKE_BUILD_TYPE is not specified. Using default: ${CMAKE_BUILD_TYPE}")
+  # Possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
+find_package(QT NAMES Qt5 Qt6)
+find_package(Qt${QT_VERSION_MAJOR}
+  COMPONENTS Svg Widgets REQUIRED
+)
+
+include(gen)
+
+# Collecting sources
+set(WIDGETS_INCLUDE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/include/widgets")
+set(WIDGETS_SRC_PATH     "${CMAKE_CURRENT_SOURCE_DIR}/src")
+file(GLOB_RECURSE files_h   ${WIDGETS_INCLUDE_PATH}/*.h)
+file(GLOB_RECURSE files_cpp ${WIDGETS_SRC_PATH}/*.cpp)
+file(GLOB_RECURSE files_qrc ${CMAKE_CURRENT_SOURCE_DIR}/*.qrc)
+
+# Library building settings
+if(BUILD_SHARED_LIBS)
+    message(STATUS "WIDGETS SHARED LIBRARY")
+    add_library(${PROJECT_NAME} SHARED ${files_h} ${files_cpp} ${files_qrc})
+    target_compile_definitions(${PROJECT_NAME} PRIVATE -DWD_EXPORTS)
+    target_compile_definitions(${PROJECT_NAME} INTERFACE -DWD_IMPORTS)
+else()
+    message(STATUS "WIDGETS STATIC LIBRARY")
+    add_library(${PROJECT_NAME} STATIC ${files_h} ${files_cpp} ${CMAKE_CURRENT_SOURCE_DIR}/styles/styles.qrc)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC -DHAVE_STATIC_BUILD)
+endif()
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${avm-gen_SOURCE_DIR}/include)
+
+# Creating library target
+add_library(avm-energo::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+# Set project version as avm-widgets target property
+set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
+set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${public_headers}")
+
+target_link_libraries(
+    ${PROJECT_NAME} PUBLIC
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Svg
+    avm-gen
+)
+
+target_compile_definitions(${PROJECT_NAME} PUBLIC -DCMAKE_CONFIG)
+
+# Using compile warnings to detect bugs and mistakes
+if(SYSTEM_NAME STREQUAL "windows")
+  target_compile_options(${PROJECT_NAME} PRIVATE /W4)
+else() # # GCC or Clang
+  target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
+
+# --- Install libs and binaries ---
+install(TARGETS ${PROJECT_NAME}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(TARGETS ${PROJECT_NAME}
+        EXPORT ${PROJECT_NAME}_Targets
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+# create version file for cmake project
+write_basic_package_version_file(${PROJECT_NAME}ConfigVersion.cmake
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion)
+
+configure_package_config_file(
+    "${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in"
+    "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+    INSTALL_DESTINATION
+    ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
+
+install(EXPORT ${PROJECT_NAME}_Targets
+        FILE ${PROJECT_NAME}Targets.cmake
+        NAMESPACE ${PROJECT_NAME}::
+        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
+
+install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+        "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
+
+# if (NOT ${LibLZMA_FOUND})
+#     install(FILES "${liblzma_BINARY_DIR}/liblzma.dll" DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME})
+#     install(FILES "${liblzma_BINARY_DIR}/lzma.lib" DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME})
+# endif()
+
+set(VERSION_IN ${CMAKE_CURRENT_SOURCE_DIR}/VERSION.in)
+set(VERSION_OUT ${CMAKE_CURRENT_SOURCE_DIR}/package/src/VERSION)
+configure_file(${VERSION_IN} ${VERSION_OUT} @ONLY)

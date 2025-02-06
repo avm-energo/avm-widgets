@@ -1,0 +1,9 @@
+Source: libavm-widgets
+Priority: optional
+Maintainer: AVM-Energo <support@avmenergo.ru>
+Section: misc
+
+Package: libavm-widgets
+Description: Widgets lib for AVM-Energo projects
+Architecture: amd64
+Depends: ${shlibs:Depends}

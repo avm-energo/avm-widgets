@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>catbeat.gif</file>
+        <file>catlayered.gif</file>
+        <file>catloading.gif</file>
+        <file>cuteecat.gif</file>
+        <file>images.qrc</file>
+        <file>walk-cat.gif</file>
+        <file>walkontwocat.gif</file>
+    </qresource>
+</RCC>
