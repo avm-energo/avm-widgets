@@ -28,7 +28,7 @@ Makefile*
 *build-*
 *.lib
 lib
-win*
+# win*
 linux*
 unix*
 
