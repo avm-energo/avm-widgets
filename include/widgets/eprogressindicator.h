@@ -27,6 +27,7 @@
 #pragma once
 
 #include <QColor>
+#include <QTimerEvent>
 #include <QWidget>
 
 class QTimer;
@@ -112,8 +113,8 @@ public slots:
     void setColor(const QColor &color) noexcept;
 
 protected:
-    virtual void timerEvent();
-    virtual void paintEvent(QPaintEvent *event);
+    virtual void timerEvent(QTimerEvent *);
+    virtual void paintEvent(QPaintEvent *);
 
 private:
     int m_angle;

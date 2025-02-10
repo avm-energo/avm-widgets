@@ -104,7 +104,7 @@ int EProgressIndicator::heightForWidth(int w) const noexcept
     return w;
 }
 
-void EProgressIndicator::timerEvent()
+void EProgressIndicator::timerEvent(QTimerEvent *)
 {
     m_angle = (m_angle + 30) % 360;
     update();
