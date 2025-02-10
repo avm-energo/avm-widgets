@@ -39,7 +39,7 @@ EProgressIndicator::EProgressIndicator(QWidget *parent)
     setFocusPolicy(Qt::NoFocus);
     m_timer->setSingleShot(false);
     m_timer->setInterval(m_delay);
-    connect(m_timer, &QTimer::timeout, this, &EProgressIndicator::timerEvent);
+    connect(m_timer, &QTimer::timeout, this, &EProgressIndicator::timeToUpdate);
 }
 
 int EProgressIndicator::animationDelay() const noexcept
@@ -104,7 +104,7 @@ int EProgressIndicator::heightForWidth(int w) const noexcept
     return w;
 }
 
-void EProgressIndicator::timerEvent(QTimerEvent *)
+void EProgressIndicator::timeToUpdate()
 {
     m_angle = (m_angle + 30) % 360;
     update();

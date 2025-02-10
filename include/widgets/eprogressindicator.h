@@ -113,7 +113,6 @@ public slots:
     void setColor(const QColor &color) noexcept;
 
 protected:
-    virtual void timerEvent(QTimerEvent *);
     virtual void paintEvent(QPaintEvent *);
 
 private:
@@ -122,4 +121,7 @@ private:
     bool m_displayedWhenStopped;
     QColor m_color;
     QTimer *m_timer;
+
+private slots:
+    void timeToUpdate();
 };
