@@ -1,3 +1,10 @@
+libavm-widgets (1.1.0) unstable; urgency=low
+
+  * ETabWidget added
+  * libavm-gen v1.9.3
+
+ -- AVM-Energo <support@avmenergo.ru>  Thu, 06 Mar 2025 13:48:54 +0300
+
 libavm-widgets (1.0.0) unstable; urgency=low
 
   * first release
