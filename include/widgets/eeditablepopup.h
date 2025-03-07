@@ -17,6 +17,7 @@ private:
 
 private slots:
     void acceptSlot();
+    void cancelSlot();
 
 protected:
     void keyPressEvent(QKeyEvent *e) override;

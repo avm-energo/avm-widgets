@@ -31,7 +31,7 @@ void EEditablePopup::execPopup()
     hlyout->addStretch(100);
     hlyout->addWidget(PBFunc::New(this, "", "Далее", this, &EEditablePopup::acceptSlot));
     hlyout->addStretch(5);
-    hlyout->addWidget(PBFunc::New(this, "", "Отмена", this, &EPopup::cancelSlot));
+    hlyout->addWidget(PBFunc::New(this, "", "Отмена", this, &EEditablePopup::cancelSlot));
     hlyout->addStretch(100);
     layout->addLayout(hlyout);
     widget->setLayout(layout);
@@ -60,6 +60,11 @@ void EEditablePopup::acceptSlot()
     }
     emit accepted();
     aboutToClose();
+}
+
+void EEditablePopup::cancelSlot()
+{
+    EPopup::cancelSlot();
 }
 
 void EEditablePopup::keyPressEvent(QKeyEvent *e)
