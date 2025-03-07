@@ -22,6 +22,7 @@ int ETabWidget::addTab(QWidget *widget, const QString &caption)
     {
         int newTabIndex = count() - 1;
         insertTab(newTabIndex, widget, caption);
+        setCurrentIndex(newTabIndex);
         return newTabIndex;
     }
     else
