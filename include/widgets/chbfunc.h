@@ -8,13 +8,13 @@
 class WD_EXPORT ChBFunc
 {
 public:
-    ChBFunc();
+    [[nodiscard]] static QCheckBox *New(QWidget *parent, const QString &chbname, const QString &chbtext);
+    [[nodiscard]] static QWidget *NewLBL(
+        QWidget *parent, const QString &caption, const QString &chbname, const QString &chbtext);
+    static bool Data(const QWidget *parent, const QString &chbname, bool &data);
+    static bool Data(const QWidget *parent, const QString &chbname);
 
-    [[nodiscard]] static QCheckBox *NewChB(QWidget *parent, const QString &chbname, const QString &chbtext);
-    static bool ChBData(const QWidget *parent, const QString &chbname, bool &data);
-    static bool ChBData(const QWidget *parent, const QString &chbname);
-
-    template <typename T> static bool ChBData(const QWidget *parent, const QString &chbname, T &data)
+    template <typename T> static bool Data(const QWidget *parent, const QString &chbname, T &data)
     {
         auto chb = parent->findChild<QCheckBox *>(chbname);
         if (chb == nullptr)
@@ -24,7 +24,7 @@ public:
     }
 
     template <typename T, std::enable_if_t<std::is_unsigned_v<T> || std_ext::is_container<T>::value, bool> = true>
-    static bool ChBGData(const QWidget *parent, const QString &chbname, T &data)
+    static bool GroupData(const QWidget *parent, const QString &chbname, T &data)
     {
         auto checkBoxGroup = parent->findChild<CheckBoxGroup *>(chbname);
         if (checkBoxGroup == nullptr)
@@ -33,10 +33,10 @@ public:
         return true;
     }
 
-    static bool SetChBData(QWidget *parent, const QString &chbname, bool data);
+    static bool SetData(QWidget *parent, const QString &chbname, bool data);
 
     template <typename T, std::enable_if_t<std::is_unsigned_v<T> || std_ext::is_container<T>::value, bool> = true>
-    static bool SetChBGData(const QWidget *parent, const QString &name, const T data)
+    static bool SetGroupData(const QWidget *parent, const QString &name, const T data)
     {
         auto checkBoxGroup = parent->findChild<CheckBoxGroup *>(name);
         if (checkBoxGroup == nullptr)

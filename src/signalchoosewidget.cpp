@@ -14,7 +14,7 @@ SignalChooseWidget::SignalChooseWidget(const QStringList &snames, const QStringL
         int idx = snames.size() - i - 1; // инверсия индекса
         QString name = snames.at(idx);
         QHBoxLayout *hlyout = new QHBoxLayout;
-        QCheckBox *chb = ChBFunc::NewChB(this, name, "");
+        QCheckBox *chb = ChBFunc::New(this, name, "");
         connect(chb, &QAbstractButton::toggled, this, [=](bool isChecked) { emit signalToggled(name, isChecked); });
         hlyout->addWidget(chb);
         auto msWidget = new MarkSignalWidget(name, this);
@@ -30,7 +30,7 @@ SignalChooseWidget::SignalChooseWidget(const QStringList &snames, const QStringL
 
 void SignalChooseWidget::setChecked(QString signame, bool checked)
 {
-    ChBFunc::SetChBData(this, signame, checked);
+    ChBFunc::SetData(this, signame, checked);
 }
 
 MarkSignalWidget::MarkSignalWidget(const QString &text, QWidget *parent) : QLabel(parent)

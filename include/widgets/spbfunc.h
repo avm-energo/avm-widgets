@@ -9,16 +9,18 @@ class WD_EXPORT SPBFunc
 public:
     SPBFunc();
 
-    [[nodiscard]] static EDoubleSpinBox *NewSPB(
+    [[nodiscard]] static EDoubleSpinBox *New(
         QWidget *parent, const QString &spbname, const double min, const double max, const int decimals);
-    [[nodiscard]] static DoubleSpinBoxGroup *NewSPBG(
-        QWidget *parent, const QString &spbname, int count, const double min, const double max, const int decimals);
-    [[nodiscard]] static DoubleSpinBoxGroup *NewSPBG(QWidget *parent, const QString &spbname, const QStringList &list,
+    [[nodiscard]] static QWidget *NewLBL(QWidget *parent, const QString &caption, const QString &spbname,
         const double min, const double max, const int decimals);
-    static bool SetSPBData(const QObject *parent, const QString &spbname, const double &spbvalue);
+    [[nodiscard]] static DoubleSpinBoxGroup *NewGroup(
+        QWidget *parent, const QString &spbname, int count, const double min, const double max, const int decimals);
+    [[nodiscard]] static DoubleSpinBoxGroup *NewGroup(QWidget *parent, const QString &spbname, const QStringList &list,
+        const double min, const double max, const int decimals);
+    static bool SetData(const QObject *parent, const QString &spbname, const double &spbvalue);
 
     template <size_t N, typename T>
-    static bool SetSPBGData(const QWidget *parent, const QString &spbname, const std::array<T, N> spbvalue)
+    static bool SetGroupData(const QWidget *parent, const QString &spbname, const std::array<T, N> spbvalue)
     {
         auto spbg = static_cast<DoubleSpinBoxGroup *>(parent->findChild<QWidget *>(spbname));
         if (spbg == nullptr)
@@ -28,7 +30,7 @@ public:
     }
 
     template <typename T>
-    static bool SetSPBGData(const QWidget *parent, const QString &spbname, const std::vector<T> &spbvalue)
+    static bool SetGroupData(const QWidget *parent, const QString &spbname, const std::vector<T> &spbvalue)
     {
         auto spbg = dynamic_cast<DoubleSpinBoxGroup *>(parent->findChild<QWidget *>(spbname));
         if (spbg == nullptr)
@@ -38,7 +40,7 @@ public:
     }
 
     template <typename T>
-    static bool SetSPBGData(const QWidget *parent, const QString &spbname, const QList<T> &spbvalue)
+    static bool SetGroupData(const QWidget *parent, const QString &spbname, const QList<T> &spbvalue)
     {
         auto spbg = dynamic_cast<DoubleSpinBoxGroup *>(parent->findChild<QWidget *>(spbname));
         if (spbg == nullptr)
@@ -47,7 +49,7 @@ public:
         return true;
     }
 
-    template <typename T> static bool SPBData(const QObject *parent, const QString &spbname, T &spbvalue)
+    template <typename T> static bool Data(const QObject *parent, const QString &spbname, T &spbvalue)
     {
         auto spb = parent->findChild<EDoubleSpinBox *>(spbname);
         if (spb == nullptr)
@@ -59,7 +61,7 @@ public:
         return true;
     }
 
-    template <typename T> static T SPBData(const QObject *parent, const QString &spbname)
+    template <typename T> static T Data(const QObject *parent, const QString &spbname)
     {
         auto spb = parent->findChild<EDoubleSpinBox *>(spbname);
         if (spb == nullptr)
@@ -71,7 +73,7 @@ public:
     }
 
     template <size_t N, typename T>
-    static bool SPBGData(const QWidget *parent, const QString &spbname, std::array<T, N> &spbvalue)
+    static bool GroupData(const QWidget *parent, const QString &spbname, std::array<T, N> &spbvalue)
     {
         auto spbg = dynamic_cast<DoubleSpinBoxGroup *>(parent->findChild<QWidget *>(spbname));
         if (spbg == nullptr)

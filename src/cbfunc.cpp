@@ -1,17 +1,20 @@
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QStringListModel>
 #include <widgets/cbfunc.h>
 
-#include <QStringListModel>
-
-CBFunc::CBFunc() { }
-
-QComboBox *CBFunc::NewCB(QWidget *parent, const QString &cbname, const QStringList &cbsl)
+CBFunc::CBFunc()
 {
-    auto cb = NewCB(parent, cbsl);
+}
+
+QComboBox *CBFunc::New(QWidget *parent, const QString &cbname, const QStringList &cbsl)
+{
+    auto cb = New(parent, cbsl);
     cb->setObjectName(cbname);
     return cb;
 }
 
-QComboBox *CBFunc::NewCB(QWidget *parent, const QStringList &cbsl)
+QComboBox *CBFunc::New(QWidget *parent, const QStringList &cbsl)
 {
     auto cb = new QComboBox(parent);
     auto cblm = new QStringListModel(cbsl, cb);
@@ -19,7 +22,20 @@ QComboBox *CBFunc::NewCB(QWidget *parent, const QStringList &cbsl)
     return cb;
 }
 
-QString CBFunc::CBData(const QWidget *parent, const QString &cbname)
+QWidget *CBFunc::NewLBL(QWidget *parent, const QString &caption, const QString &cbname, const QStringList &cbsl)
+{
+    QWidget *w = new QWidget(parent);
+    w->setContentsMargins(0, 0, 0, 0);
+    auto hlyout = new QHBoxLayout;
+    auto lbl = new QLabel(caption, w);
+    hlyout->addWidget(lbl, 0);
+    QComboBox *cb = New(w, cbname, cbsl);
+    hlyout->addWidget(cb, 10);
+    w->setLayout(hlyout);
+    return w;
+}
+
+QString CBFunc::Data(const QWidget *parent, const QString &cbname)
 {
     auto cb = parent->findChild<QComboBox *>(cbname);
     if (cb == nullptr)
@@ -27,7 +43,7 @@ QString CBFunc::CBData(const QWidget *parent, const QString &cbname)
     return cb->currentText();
 }
 
-int CBFunc::CBIndex(const QObject *parent, const QString &cbname)
+int CBFunc::Index(const QObject *parent, const QString &cbname)
 {
     auto cb = parent->findChild<QComboBox *>(cbname);
     if (cb == nullptr)
@@ -35,7 +51,7 @@ int CBFunc::CBIndex(const QObject *parent, const QString &cbname)
     return cb->currentIndex();
 }
 
-bool CBFunc::SetCBData(const QWidget *parent, const QString &cbname, const QString &cbvalue)
+bool CBFunc::SetData(const QWidget *parent, const QString &cbname, const QString &cbvalue)
 {
     auto cb = parent->findChild<QComboBox *>(cbname);
     if (cb == nullptr)
@@ -44,7 +60,7 @@ bool CBFunc::SetCBData(const QWidget *parent, const QString &cbname, const QStri
     return true;
 }
 
-bool CBFunc::SetCBIndex(const QObject *parent, const QString &cbname, int index)
+bool CBFunc::SetIndex(const QObject *parent, const QString &cbname, int index)
 {
     auto cb = parent->findChild<QComboBox *>(cbname);
     if (cb == nullptr)
@@ -58,7 +74,7 @@ bool CBFunc::SetCBIndex(const QObject *parent, const QString &cbname, int index)
     return false;
 }
 
-bool CBFunc::SetCBColor(QWidget *parent, const QString &cbname, const QString &color)
+bool CBFunc::SetColor(QWidget *parent, const QString &cbname, const QString &color)
 {
     auto cb = parent->findChild<QComboBox *>(cbname);
     if (cb == nullptr)

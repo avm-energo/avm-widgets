@@ -8,17 +8,59 @@ class WD_EXPORT CBFunc
 public:
     CBFunc();
 
-    [[nodiscard]] static QComboBox *NewCB(QWidget *parent, const QString &cbname, const QStringList &cbsl);
-    [[nodiscard]] static QComboBox *NewCB(QWidget *parent, const QStringList &cbsl);
-    static bool SetCBData(const QWidget *parent, const QString &cbname, const QString &cbvalue);
-    static bool SetCBIndex(const QObject *parent, const QString &cbname, int index);
-    static bool SetCBColor(QWidget *parent, const QString &cbname, const QString &color);
-    static QString CBData(const QWidget *parent, const QString &cbname);
-    static int CBIndex(const QObject *parent, const QString &cbname);
+    /// \brief Creates new ComboBox widget
+    /// \param parent - pointer to parent widget
+    /// \param cbname - name of combobox to find by objectName
+    /// \param cbsl - stringlist of combobox members
+    /// \return QComboBox object
+    [[nodiscard]] static QComboBox *New(QWidget *parent, const QString &cbname, const QStringList &cbsl);
+    /// \brief Creates new ComboBox widget
+    /// \param parent - pointer to parent widget
+    /// \param cbsl - stringlist of combobox members
+    /// \return QComboBox object
+    [[nodiscard]] static QComboBox *New(QWidget *parent, const QStringList &cbsl);
+    /// \brief Creates new ComboBox widget with label before it
+    /// \param parent - pointer to parent widget
+    /// \param caption - label text
+    /// \param cbname - name of combobox to find by objectName
+    /// \param cbsl - stringlist of combobox members
+    /// \return QComboBox object
+    [[nodiscard]] static QWidget *NewLBL(
+        QWidget *parent, const QString &caption, const QString &cbname, const QStringList &cbsl);
+    /// \brief Sets current string in ComboBox
+    /// \param parent - pointer to parent widget
+    /// \param cbname - combobox objectName to find
+    /// \param cbvalue - text to set in combobox
+    static bool SetData(const QWidget *parent, const QString &cbname, const QString &cbvalue);
+    /// \brief Sets current string by its index in ComboBox
+    /// \param parent - pointer to parent widget
+    /// \param cbname - combobox objectName to find
+    /// \param index - index of text to set in combobox
+    static bool SetIndex(const QObject *parent, const QString &cbname, int index);
+    /// \brief Sets current color of text in ComboBox
+    /// \param parent - pointer to parent widget
+    /// \param cbname - combobox objectName to find
+    /// \param color - color of the text in format: #RRGGBB
+    static bool SetColor(QWidget *parent, const QString &cbname, const QString &color);
+    /// \brief Returns current text in ComboBox
+    /// \param parent - pointer to parent widget
+    /// \param cbname - combobox objectName to find
+    /// \return Current text in ComboBox
+    static QString Data(const QWidget *parent, const QString &cbname);
+    /// \brief Returns current index
+    /// \param parent - pointer to parent widget
+    /// \param cbname - combobox objectName to find
+    /// \return Current index
+    static int Index(const QObject *parent, const QString &cbname);
 
-    template <typename T> static T CBData(const QWidget *parent, const QString &cbname)
+    /// \brief Returns current text in ComboBox by terms of the type of invoke
+    /// \details If the type is float translate number in combobox changing comma to dot
+    /// \param parent - pointer to parent widget
+    /// \param cbname - combobox objectName to find
+    /// \return Current value in ComboBox
+    template <typename T> static T Data(const QWidget *parent, const QString &cbname)
     {
-        auto buffer = CBData(parent, cbname);
+        auto buffer = Data(parent, cbname);
         if constexpr (std::is_floating_point_v<T>)
             buffer.replace(',', '.');
         return QVariant(buffer).value<T>();

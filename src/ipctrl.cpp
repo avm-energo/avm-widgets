@@ -8,7 +8,7 @@
 #include <QLineEdit>
 #include <QRegularExpressionValidator>
 
-IPCtrl::IPCtrl(QWidget *parent) : QFrame(parent)
+IPCtrl::IPCtrl(QWidget *parent, const QString &caption) : QFrame(parent)
 {
     setFrameShape(QFrame::StyledPanel);
     setFrameShadow(QFrame::Sunken);
@@ -17,6 +17,8 @@ IPCtrl::IPCtrl(QWidget *parent) : QFrame(parent)
     setLayout(pLayout);
     pLayout->setContentsMargins(0, 0, 1, 0);
     pLayout->setSpacing(0);
+    if (!caption.isEmpty())
+        pLayout->addWidget(new QLabel(caption, this), 0);
 
     QLineEdit *pEdit = nullptr;
 

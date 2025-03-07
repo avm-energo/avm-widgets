@@ -1,8 +1,6 @@
 #include <widgets/tefunc.h>
 
-TEFunc::TEFunc() { }
-
-bool TEFunc::SetTEData(QWidget *parent, const QString &tename, const QString &tetext)
+bool TEFunc::SetData(QWidget *parent, const QString &tename, const QString &tetext)
 {
     auto te = parent->findChild<QTextEdit *>(tename);
     if (te == nullptr)
@@ -11,7 +9,7 @@ bool TEFunc::SetTEData(QWidget *parent, const QString &tename, const QString &te
     return true;
 }
 
-bool TEFunc::AppendTEData(QWidget *parent, const QString &tename, const QString &tetext)
+bool TEFunc::AppendData(QWidget *parent, const QString &tename, const QString &tetext)
 {
     auto te = parent->findChild<QTextEdit *>(tename);
     if (te == nullptr)
@@ -20,7 +18,7 @@ bool TEFunc::AppendTEData(QWidget *parent, const QString &tename, const QString 
     return true;
 }
 
-bool TEFunc::TEData(QWidget *parent, const QString &tename, QString &tevalue)
+bool TEFunc::Data(QWidget *parent, const QString &tename, QString &tevalue)
 {
     auto te = parent->findChild<QTextEdit *>(tename);
     if (te == nullptr)

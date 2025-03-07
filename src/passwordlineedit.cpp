@@ -10,7 +10,7 @@ PasswordLineEdit::PasswordLineEdit(QWidget *parent) : QWidget(parent) { }
 PasswordLineEdit::PasswordLineEdit(QLineEdit::EchoMode echostyle, QWidget *parent)
 {
     QHBoxLayout *hlyout = new QHBoxLayout;
-    QLineEdit *le = LEFunc::NewLE(parent, "pswle");
+    QLineEdit *le = LEFunc::New(parent, "pswle");
     le->setEchoMode(echostyle);
     hlyout->addWidget(le, 10);
     QPushButton *pb = new QPushButton(parent);

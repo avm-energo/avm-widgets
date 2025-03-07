@@ -1,10 +1,9 @@
-#include <gen/stdfunc.h>
-#include <widgets/epopup.h>
-#include <widgets/wdfunc.h>
-#include <gen/pch.h>
-
 #include <QApplication>
 #include <QMainWindow>
+#include <gen/pch.h>
+#include <gen/stdfunc.h>
+#include <widgets/emessagebox.h>
+#include <widgets/wdfunc.h>
 
 QMainWindow *WDFunc::getMainWindow()
 {

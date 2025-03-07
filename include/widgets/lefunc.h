@@ -3,21 +3,21 @@
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <widgets/export.h>
+#include <widgets/passwordlineedit.h>
 
-class PasswordLineEdit;
 class WD_EXPORT LEFunc
 {
 public:
     LEFunc();
 
-    [[nodiscard]] static QLineEdit *NewLE(
+    [[nodiscard]] static QLineEdit *New(
         QWidget *parent, const QString &lename, const QString &letext = "", const QString &tooltip = "");
-    [[nodiscard]] static PasswordLineEdit *NewPswLE(
+    [[nodiscard]] static PasswordLineEdit *NewPsw(
         QWidget *parent, const QString &lename, QLineEdit::EchoMode echostyle = QLineEdit::Normal);
-    static bool SetLEData(QObject *parent, const QString &lename, const QString &levalue, const QString &restring = "");
-    [[nodiscard]] static QString LEData(QObject *parent, const QString &lename);
+    static bool SetData(QObject *parent, const QString &lename, const QString &levalue, const QString &restring = "");
+    [[nodiscard]] static QString Data(QObject *parent, const QString &lename);
 
-    template <typename T> static void LEData(QObject *parent, const QString &lename, T &value)
+    template <typename T> static void Data(QObject *parent, const QString &lename, T &value)
     {
         auto le = parent->findChild<QLineEdit *>(lename);
         if (le == nullptr)
@@ -26,7 +26,7 @@ public:
             value = qvariant_cast<T>(le->text());
     }
 
-    template <typename T> static bool LENumber(QWidget *parent, const QString &lename, T &levalue)
+    template <typename T> static bool Number(QWidget *parent, const QString &lename, T &levalue)
     {
         auto le = parent->findChild<QLineEdit *>(lename);
         if (le == nullptr)
@@ -35,7 +35,7 @@ public:
         return true;
     }
 
-    static bool SetLEColor(QWidget *parent, const QString &lename, const QColor &color);
+    static bool SetColor(QWidget *parent, const QString &lename, const QColor &color);
 
-    [[nodiscard]] static QWidget *NewLBLAndLE(QWidget *parent, QString caption, QString lename, bool enabled = false);
+    [[nodiscard]] static QWidget *NewLBL(QWidget *parent, QString caption, QString lename, bool enabled = false);
 };

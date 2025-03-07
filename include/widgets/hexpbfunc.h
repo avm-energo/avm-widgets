@@ -5,10 +5,8 @@
 class WD_EXPORT HexPBFunc
 {
 public:
-    HexPBFunc();
-
     template <typename Functor>
-    inline static HexagonButton *NewHexagonPB(QWidget *parent, const QString &pbname, Functor &&functor,
+    inline static HexagonButton *New(QWidget *parent, const QString &pbname, Functor &&functor,
         const QString &icon = "", const QString &pbtooltip = "")
     {
         auto pb = new HexagonButton(parent);
@@ -22,8 +20,8 @@ public:
         return pb;
     }
 
-    static void setHexagonPBProcessed(QWidget *parent, const QString &name);
-    static void setHexagonPBRestricted(QWidget *parent, const QString &name);
-    static void setHexagonPBNormal(QWidget *parent, const QString &name);
-    static void setHexagonPBIcon(QWidget *parent, const QString &name, QStringList &attrs, QStringList &values);
+    static void SetProcessed(QWidget *parent, const QString &name);
+    static void SetRestricted(QWidget *parent, const QString &name);
+    static void setNormal(QWidget *parent, const QString &name);
+    static void setIcon(QWidget *parent, const QString &name, QStringList &attrs, QStringList &values);
 };

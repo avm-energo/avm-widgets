@@ -1,3 +1,5 @@
+#include <QHBoxLayout>
+#include <QLabel>
 #include <gen/error.h>
 #include <widgets/spbfunc.h>
 
@@ -5,7 +7,7 @@ SPBFunc::SPBFunc()
 {
 }
 
-EDoubleSpinBox *SPBFunc::NewSPB(
+EDoubleSpinBox *SPBFunc::New(
     QWidget *parent, const QString &spbname, const double min, const double max, const int decimals)
 {
     auto dsb = new EDoubleSpinBox(parent);
@@ -18,7 +20,21 @@ EDoubleSpinBox *SPBFunc::NewSPB(
     return dsb;
 }
 
-DoubleSpinBoxGroup *SPBFunc::NewSPBG(
+QWidget *SPBFunc::NewLBL(QWidget *parent, const QString &caption, const QString &spbname, const double min,
+    const double max, const int decimals)
+{
+    auto widget = new QWidget(parent);
+    widget->setContentsMargins(0, 0, 0, 0);
+    auto hlyout = new QHBoxLayout;
+    auto lbl = new QLabel(caption, widget);
+    hlyout->addWidget(lbl, 0);
+    auto spb = New(widget, spbname, min, max, decimals);
+    hlyout->addWidget(spb, 10);
+    widget->setLayout(hlyout);
+    return widget;
+}
+
+DoubleSpinBoxGroup *SPBFunc::NewGroup(
     QWidget *parent, const QString &spbname, int count, const double min, const double max, const int decimals)
 {
     auto spinBoxGroup = new DoubleSpinBoxGroup(count, parent);
@@ -31,8 +47,8 @@ DoubleSpinBoxGroup *SPBFunc::NewSPBG(
     return spinBoxGroup;
 }
 
-DoubleSpinBoxGroup *SPBFunc::NewSPBG(QWidget *parent, const QString &spbname, const QStringList &list, const double min,
-    const double max, const int decimals)
+DoubleSpinBoxGroup *SPBFunc::NewGroup(QWidget *parent, const QString &spbname, const QStringList &list,
+    const double min, const double max, const int decimals)
 {
     auto spinBoxGroup = new DoubleSpinBoxGroup(list, parent);
     spinBoxGroup->setObjectName(spbname);
@@ -44,7 +60,7 @@ DoubleSpinBoxGroup *SPBFunc::NewSPBG(QWidget *parent, const QString &spbname, co
     return spinBoxGroup;
 }
 
-bool SPBFunc::SetSPBData(const QObject *parent, const QString &spbname, const double &spbvalue)
+bool SPBFunc::SetData(const QObject *parent, const QString &spbname, const double &spbvalue)
 {
     auto spb = parent->findChild<EDoubleSpinBox *>(spbname);
     if (spb == nullptr)

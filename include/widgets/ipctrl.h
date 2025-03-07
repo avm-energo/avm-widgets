@@ -13,7 +13,7 @@ class WD_EXPORT IPCtrl : public QFrame
 public:
     static constexpr auto MAX_DIGITS = 3; ///< число символов в LineEdit
 
-    IPCtrl(QWidget *parent = nullptr);
+    IPCtrl(QWidget *parent = nullptr, const QString &caption = "");
     ~IPCtrl();
 
     virtual bool eventFilter(QObject *obj, QEvent *event);

@@ -1,12 +1,12 @@
-#include <widgets/lefunc.h>
-#include <widgets/passwordlineedit.h>
-
 #include <QLabel>
 #include <QRegularExpressionValidator>
+#include <widgets/lefunc.h>
 
-LEFunc::LEFunc() { }
+LEFunc::LEFunc()
+{
+}
 
-QLineEdit *LEFunc::NewLE(QWidget *parent, const QString &lename, const QString &letext, const QString &tooltip)
+QLineEdit *LEFunc::New(QWidget *parent, const QString &lename, const QString &letext, const QString &tooltip)
 {
     auto le = new QLineEdit(parent);
     le->setObjectName(lename);
@@ -15,14 +15,14 @@ QLineEdit *LEFunc::NewLE(QWidget *parent, const QString &lename, const QString &
     return le;
 }
 
-PasswordLineEdit *LEFunc::NewPswLE(QWidget *parent, const QString &lename, QLineEdit::EchoMode echostyle)
+PasswordLineEdit *LEFunc::NewPsw(QWidget *parent, const QString &lename, QLineEdit::EchoMode echostyle)
 {
     auto le = new PasswordLineEdit(echostyle, parent);
     le->setObjectName(lename);
     return le;
 }
 
-QString LEFunc::LEData(QObject *parent, const QString &lename)
+QString LEFunc::Data(QObject *parent, const QString &lename)
 {
     auto le = parent->findChild<QLineEdit *>(lename);
     if (le == nullptr)
@@ -30,7 +30,7 @@ QString LEFunc::LEData(QObject *parent, const QString &lename)
     return le->text();
 }
 
-bool LEFunc::SetLEData(QObject *parent, const QString &lename, const QString &levalue, const QString &restring)
+bool LEFunc::SetData(QObject *parent, const QString &lename, const QString &levalue, const QString &restring)
 {
     auto le = parent->findChild<QLineEdit *>(lename);
     if (le == nullptr)
@@ -44,7 +44,7 @@ bool LEFunc::SetLEData(QObject *parent, const QString &lename, const QString &le
     return true;
 }
 
-bool LEFunc::SetLEColor(QWidget *parent, const QString &lename, const QColor &color)
+bool LEFunc::SetColor(QWidget *parent, const QString &lename, const QColor &color)
 {
     auto le = parent->findChild<QLineEdit *>(lename);
     if (le == nullptr)
@@ -56,7 +56,7 @@ bool LEFunc::SetLEColor(QWidget *parent, const QString &lename, const QColor &co
     return true;
 }
 
-QWidget *LEFunc::NewLBLAndLE(QWidget *parent, QString caption, QString lename, bool enabled)
+QWidget *LEFunc::NewLBL(QWidget *parent, QString caption, QString lename, bool enabled)
 {
     auto widget = new QWidget(parent);
     widget->setContentsMargins(0, 0, 0, 0);

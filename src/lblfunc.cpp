@@ -6,7 +6,7 @@
 
 LBLFunc::LBLFunc() { }
 
-QWidget *LBLFunc::NewLBLAndLBL(QWidget *parent, QString lblname, QString caption, bool enabled)
+QWidget *LBLFunc::NewLBL(QWidget *parent, QString lblname, QString caption, bool enabled)
 {
     static constexpr char valuesFormat[]
         = "QLabel {border: 1px solid green; border-radius: 4px; padding: 1px; font: bold; }";
@@ -24,7 +24,7 @@ QWidget *LBLFunc::NewLBLAndLBL(QWidget *parent, QString lblname, QString caption
     return widget;
 }
 
-QLabel *LBLFunc::NewLBL(
+QLabel *LBLFunc::New(
     QWidget *parent, const QString &text, const QString &lblname, const QPixmap *pm, const QString &lbltip)
 {
     auto lbl = new QLabel(parent);
@@ -39,7 +39,7 @@ QLabel *LBLFunc::NewLBL(
     return lbl;
 }
 
-QLabel *LBLFunc::NewLBLT(
+QLabel *LBLFunc::NewT(
     QWidget *parent, const QString &text, const QString &lblname, const QString &lbltip, bool fixed)
 {
     auto lbl = new QLabel(parent);
@@ -52,7 +52,7 @@ QLabel *LBLFunc::NewLBLT(
     return lbl;
 }
 
-bool LBLFunc::SetLBLTColor(QWidget *parent, const QString &lblname, const QString &color)
+bool LBLFunc::SetTColor(QWidget *parent, const QString &lblname, const QString &color)
 {
 
     auto style = "QLabel {border: 1px solid green; border-radius: 4px; "
@@ -69,7 +69,7 @@ bool LBLFunc::SetLBLTColor(QWidget *parent, const QString &lblname, const QStrin
     return true;
 }
 
-bool LBLFunc::SetLBLImage(QWidget *parent, const QString &lblname, QPixmap *pm)
+bool LBLFunc::SetImage(QWidget *parent, const QString &lblname, QPixmap *pm)
 {
     auto lbl = parent->findChild<QLabel *>(lblname);
     Q_ASSERT(lbl != nullptr);
@@ -85,7 +85,7 @@ bool LBLFunc::SetLBLImage(QWidget *parent, const QString &lblname, QPixmap *pm)
     }
 }
 
-bool LBLFunc::SetLBLColor(QWidget *parent, const QString &lblname, const QString &lblcolor)
+bool LBLFunc::SetColor(QWidget *parent, const QString &lblname, const QString &lblcolor)
 {
     auto lbl = parent->findChild<QLabel *>(lblname);
     if (lbl == nullptr)
@@ -97,7 +97,7 @@ bool LBLFunc::SetLBLColor(QWidget *parent, const QString &lblname, const QString
     return true;
 }
 
-bool LBLFunc::SetLBLText(QWidget *parent, const QString &lblname, const QString &lbltext, bool enabled)
+bool LBLFunc::SetText(QWidget *parent, const QString &lblname, const QString &lbltext, bool enabled)
 {
     auto lbl = parent->findChild<QLabel *>(lblname);
     if (lbl == nullptr)
@@ -108,7 +108,7 @@ bool LBLFunc::SetLBLText(QWidget *parent, const QString &lblname, const QString 
     return true;
 }
 
-QString LBLFunc::LBLText(QWidget *parent, const QString &lblname)
+QString LBLFunc::Text(QWidget *parent, const QString &lblname)
 {
     auto lbl = parent->findChild<QLabel *>(lblname);
     if (lbl == nullptr)

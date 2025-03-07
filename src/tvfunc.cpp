@@ -1,10 +1,6 @@
 #include <widgets/tvfunc.h>
 
-TVFunc::TVFunc()
-{
-}
-
-QString TVFunc::TVField(QWidget *parent, const QString &tvname, int column, bool isid)
+QString TVFunc::Field(QWidget *parent, const QString &tvname, int column, bool isid)
 {
     auto tv = parent->findChild<QTableView *>(tvname);
     if (tv == nullptr)
@@ -28,7 +24,7 @@ QString TVFunc::TVField(QWidget *parent, const QString &tvname, int column, bool
     return tmps;
 }
 
-void TVFunc::TVAutoResize(QWidget *parent, const QString &tvname)
+void TVFunc::AutoResize(QWidget *parent, const QString &tvname)
 {
     auto tv = parent->findChild<QTableView *>(tvname);
     if (tv == nullptr)
@@ -42,7 +38,7 @@ void TVFunc::TVAutoResize(QWidget *parent, const QString &tvname)
     tv->resizeRowsToContents();
 }
 
-QVariant TVFunc::TVData(QWidget *parent, const QString &tvname, int column)
+QVariant TVFunc::Data(QWidget *parent, const QString &tvname, int column)
 {
     auto tv = parent->findChild<QTableView *>(tvname);
     if (tv == nullptr)
@@ -53,7 +49,7 @@ QVariant TVFunc::TVData(QWidget *parent, const QString &tvname, int column)
     return QVariant();
 }
 
-QTableView *TVFunc::NewQTV(QWidget *parent, const QString &tvname, QAbstractItemModel *model)
+QTableView *TVFunc::New(QWidget *parent, const QString &tvname, QAbstractItemModel *model)
 {
     auto tv = new QTableView(parent);
     if (model != nullptr)
@@ -64,7 +60,7 @@ QTableView *TVFunc::NewQTV(QWidget *parent, const QString &tvname, QAbstractItem
     return tv;
 }
 
-void TVFunc::SetTVModel(QWidget *parent, const QString &tvname, QAbstractItemModel *model, bool sortenable)
+void TVFunc::SetModel(QWidget *parent, const QString &tvname, QAbstractItemModel *model, bool sortenable)
 {
     auto tv = parent->findChild<QTableView *>(tvname);
     if (tv == nullptr)
@@ -79,22 +75,7 @@ void TVFunc::SetTVModel(QWidget *parent, const QString &tvname, QAbstractItemMod
     delete m;
 }
 
-void TVFunc::SetQTVModel(QWidget *parent, const QString &tvname, QAbstractItemModel *model, bool sortenable)
-{
-    auto tv = parent->findChild<QTableView *>(tvname);
-    if (tv == nullptr)
-    {
-        qDebug() << "Пустой tv";
-        return;
-    }
-    auto selectModel = tv->selectionModel();
-    tv->setModel(model);
-    tv->resizeColumnsToContents();
-    tv->setSortingEnabled(sortenable);
-    delete selectModel;
-}
-
-void TVFunc::SortTV(QWidget *parent, const QString &tvname, int column, Qt::SortOrder sortorder)
+void TVFunc::Sort(QWidget *parent, const QString &tvname, int column, Qt::SortOrder sortorder)
 {
     auto tv = parent->findChild<QTableView *>(tvname);
     if (tv == nullptr)
@@ -106,7 +87,7 @@ void TVFunc::SortTV(QWidget *parent, const QString &tvname, int column, Qt::Sort
         tv->sortByColumn(column, sortorder);
 }
 
-QAbstractItemModel *TVFunc::TVModel(QWidget *parent, const QString &tvname)
+QAbstractItemModel *TVFunc::Model(QWidget *parent, const QString &tvname)
 {
     auto tv = parent->findChild<QTableView *>(tvname);
     if (tv == nullptr)

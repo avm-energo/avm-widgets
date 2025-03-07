@@ -1,8 +1,8 @@
+#include <QHBoxLayout>
+#include <QLabel>
 #include <widgets/rbfunc.h>
 
-RBFunc::RBFunc() { }
-
-QRadioButton *RBFunc::NewRB2(QWidget *parent, const QString &rbtext, const QString &rbname)
+QRadioButton *RBFunc::New(QWidget *parent, const QString &rbtext, const QString &rbname)
 {
     auto rb = new QRadioButton(parent);
     rb->setObjectName(rbname);
@@ -10,7 +10,20 @@ QRadioButton *RBFunc::NewRB2(QWidget *parent, const QString &rbtext, const QStri
     return rb;
 }
 
-bool RBFunc::RBData(QWidget *parent, const QString &rbname, bool &data)
+QWidget *RBFunc::NewLBL(QWidget *parent, const QString &caption, const QString &rbtext, const QString &rbname)
+{
+    auto widget = new QWidget(parent);
+    widget->setContentsMargins(0, 0, 0, 0);
+    auto hlyout = new QHBoxLayout;
+    auto lbl = new QLabel(caption, widget);
+    hlyout->addWidget(lbl, 0);
+    auto rb = New(widget, rbtext, rbname);
+    hlyout->addWidget(rb, 10);
+    widget->setLayout(hlyout);
+    return widget;
+}
+
+bool RBFunc::Data(QWidget *parent, const QString &rbname, bool &data)
 {
     auto rb = parent->findChild<QRadioButton *>(rbname);
     if (rb == nullptr)
@@ -19,7 +32,7 @@ bool RBFunc::RBData(QWidget *parent, const QString &rbname, bool &data)
     return true;
 }
 
-bool RBFunc::SetRBData(QWidget *parent, const QString &rbname, bool data)
+bool RBFunc::SetData(QWidget *parent, const QString &rbname, bool data)
 {
     auto rb = parent->findChild<QRadioButton *>(rbname);
     if (rb == nullptr)
