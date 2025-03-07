@@ -31,7 +31,7 @@ void EEditablePopup::execPopup()
     hlyout->addStretch(100);
     hlyout->addWidget(PBFunc::New(this, "", "Далее", this, &EEditablePopup::acceptSlot));
     hlyout->addStretch(5);
-    hlyout->addWidget(PBFunc::New(this, "", "Отмена", this, &EEditablePopup::cancelSlot));
+    hlyout->addWidget(PBFunc::New(this, "", "Отмена", this, &EPopup::cancelSlot));
     hlyout->addStretch(100);
     layout->addLayout(hlyout);
     widget->setLayout(layout);

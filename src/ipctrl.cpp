@@ -8,11 +8,11 @@
 #include <QLineEdit>
 #include <QRegularExpressionValidator>
 
-IPCtrl::IPCtrl(QWidget *parent, const QString &caption) : QFrame(parent)
+IPCtrl::IPCtrl(QWidget *parent, const QString &name, const QString &caption) : QFrame(parent)
 {
     setFrameShape(QFrame::StyledPanel);
     setFrameShadow(QFrame::Sunken);
-
+    setObjectName(name);
     QHBoxLayout *pLayout = new QHBoxLayout(this);
     setLayout(pLayout);
     pLayout->setContentsMargins(0, 0, 1, 0);
