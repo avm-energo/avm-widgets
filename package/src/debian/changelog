@@ -1,3 +1,11 @@
+libavm-widgets (2.0.0) unstable; urgency=low
+
+  [*] Big refactoring
+  [*] EEditablePopup, EPasswordPopup and EMessageBox are now in separate classes
+  [*] some *func are now have methods NewLBL to let a label prepend widget
+
+ -- AVM-Energo <support@avmenergo.ru>  Fri, 07 Mar 2025 09:31:55 +0300
+
 libavm-widgets (1.1.0) unstable; urgency=low
 
   * ETabWidget added
