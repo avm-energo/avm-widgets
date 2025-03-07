@@ -41,7 +41,11 @@ void ETabWidget::closeTab(int index)
 {
     int plusTabIndex = count() - 1;
     if ((tabBar()->count() > 1) && (index != plusTabIndex))
+    {
         removeTab(index);
+        if (count() > 1)
+            setCurrentIndex(0);
+    }
 }
 
 void ETabWidget::tabClicked(int index)
