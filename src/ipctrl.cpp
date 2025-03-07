@@ -8,17 +8,14 @@
 #include <QLineEdit>
 #include <QRegularExpressionValidator>
 
-IPCtrl::IPCtrl(QWidget *parent, const QString &name, const QString &caption) : QFrame(parent)
+IPCtrl::IPCtrl(QWidget *parent) : QFrame(parent)
 {
     setFrameShape(QFrame::StyledPanel);
     setFrameShadow(QFrame::Sunken);
-    setObjectName(name);
     QHBoxLayout *pLayout = new QHBoxLayout(this);
     setLayout(pLayout);
     pLayout->setContentsMargins(0, 0, 1, 0);
     pLayout->setSpacing(0);
-    if (!caption.isEmpty())
-        pLayout->addWidget(new QLabel(caption, this), 0);
 
     QLineEdit *pEdit = nullptr;
 
@@ -173,6 +170,29 @@ void IPCtrl::setIP(const NetIP ipAddr)
     }
 }
 
+QWidget *IPCtrl::New(QWidget *parent, const QString &name, const QString &caption)
+{
+    if (!caption.isEmpty())
+    {
+        auto widget = new QWidget(parent);
+        widget->setContentsMargins(0, 0, 0, 0);
+        auto hlyout = new QHBoxLayout;
+        auto lbl = new QLabel(caption, widget);
+        hlyout->addWidget(lbl, 0);
+        auto ipctrl = new IPCtrl(parent);
+        ipctrl->setObjectName(name);
+        hlyout->addWidget(ipctrl, 10);
+        widget->setLayout(hlyout);
+        return widget;
+    }
+    else
+    {
+        auto ipctrl = new IPCtrl(parent);
+        ipctrl->setObjectName(name);
+        return ipctrl;
+    }
+}
+
 void IPCtrl::moveNextLineEdit(int i)
 {
     if (i + 1 != NET_IP_SIZE)
@@ -193,7 +213,7 @@ void IPCtrl::movePrevLineEdit(int i)
     }
 }
 
-bool IPCtrl::SetIPCtrlData(const QObject *parent, const QString &name, const std::array<quint8, 4> &value)
+bool IPCtrl::SetData(const QObject *parent, const QString &name, const NetIP &value)
 {
     auto ipControl = parent->findChild<IPCtrl *>(name);
     if (ipControl == nullptr)
@@ -202,7 +222,7 @@ bool IPCtrl::SetIPCtrlData(const QObject *parent, const QString &name, const std
     return true;
 }
 
-std::array<quint8, 4> IPCtrl::IPCtrlData(const QObject *parent, const QString &name)
+NetIP IPCtrl::Data(const QObject *parent, const QString &name)
 {
     auto ipControl = parent->findChild<IPCtrl *>(name);
     if (ipControl == nullptr)

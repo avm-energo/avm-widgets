@@ -13,7 +13,7 @@ class WD_EXPORT IPCtrl : public QFrame
 public:
     static constexpr auto MAX_DIGITS = 3; ///< число символов в LineEdit
 
-    IPCtrl(QWidget *parent = nullptr, const QString &name = "", const QString &caption = "");
+    IPCtrl(QWidget *parent = nullptr);
     ~IPCtrl();
 
     virtual bool eventFilter(QObject *obj, QEvent *event);
@@ -21,8 +21,9 @@ public:
     NetIP getIP() const;
     void setIP(const NetIP ipAddr);
 
-    static bool SetIPCtrlData(const QObject *parent, const QString &name, const std::array<quint8, 4> &value);
-    static std::array<quint8, 4> IPCtrlData(const QObject *parent, const QString &name);
+    static QWidget *New(QWidget *parent, const QString &name = "", const QString &caption = "");
+    static bool SetData(const QObject *parent, const QString &name, const NetIP &value);
+    static NetIP Data(const QObject *parent, const QString &name);
 
 signals:
     void signalTextChanged(QLineEdit *pEdit);
