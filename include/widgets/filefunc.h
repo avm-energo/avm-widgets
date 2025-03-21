@@ -7,6 +7,11 @@
 class WD_EXPORT FileFunc
 {
 public:
+    enum WidgetTypes
+    {
+        DIR,
+        FILE
+    };
     FileFunc();
 
     [[nodiscard]] static QString ChooseFileForOpen(QWidget *parent, QString mask);
@@ -15,4 +20,6 @@ public:
     [[nodiscard]] static QString ChooseFileForSave(
         QWidget *parent, const QString &mask, const QString &ext, const QString &filename = "");
     [[nodiscard]] static QString ChooseDirectoryForOpen(QWidget *parent);
+    static QWidget *New(QWidget *parent, const QString &wname, WidgetTypes type = WidgetTypes::FILE,
+        const QString &mask = "Все файлы (*.*)", const QString &path = "");
 };

@@ -1,7 +1,9 @@
 #include <QFileDialog>
+#include <QHBoxLayout>
 #include <gen/stdfunc.h>
 #include <widgets/filefunc.h>
-
+#include <widgets/lefunc.h>
+#include <widgets/pbfunc.h>
 FileFunc::FileFunc()
 {
 }
@@ -54,4 +56,21 @@ QString FileFunc::ChooseDirectoryForOpen(QWidget *parent)
     }
     dlg->close();
     return dirPath;
+}
+
+QWidget *FileFunc::New(
+    QWidget *parent, const QString &wname, WidgetTypes type, const QString &mask, const QString &path)
+{
+    QWidget *w = new QWidget;
+    QHBoxLayout *hlyout = new QHBoxLayout;
+    hlyout->addWidget(LEFunc::NewLBL(parent, (type == WidgetTypes::FILE) ? "Файл: " : "Каталог: ", wname));
+    hlyout->addWidget(PBFunc::New(parent, "", "...", [=] {
+        if (type == WidgetTypes::FILE)
+            LEFunc::SetData(parent, wname, ChooseFileForOpen(parent, mask));
+        else
+            LEFunc::SetData(parent, wname, ChooseDirectoryForOpen(parent));
+    }));
+    LEFunc::SetData(parent, wname, path);
+    w->setLayout(hlyout);
+    return w;
 }
