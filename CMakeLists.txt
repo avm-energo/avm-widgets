@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 
 project(avm-widgets LANGUAGES CXX
   DESCRIPTION "Widgets library for AVM-Energo C++ projects"
-  VERSION 2.0.0)
+  VERSION 2.1.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

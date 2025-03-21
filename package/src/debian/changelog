@@ -1,4 +1,10 @@
-libavm-widgets (2.0.0) unstable; urgency=low
+libavm-widgets (2.1.0) unstable; urgency=low
+
+  [+] FileFunc::New method added to choose file or directory
+
+ -- AVM-Energo <support@avmenergo.ru>  Fri, 21 Mar 2025 16:11:56 +0300
+
+ libavm-widgets (2.0.0) unstable; urgency=low
 
   [*] Big refactoring
   [*] EEditablePopup, EPasswordPopup and EMessageBox are now in separate classes
