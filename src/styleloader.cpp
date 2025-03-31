@@ -7,6 +7,15 @@
 #include <QMetaEnum>
 #include <QSettings>
 
+QMap<QString, QString> Style::themes{
+    {"Light", defaultStyleFile},                   //
+    {"Dark", ":/styles/darkstyle.qss"},            //
+    {"Drakula", ":/styles/dracula.css"},           //
+    {"Aqua", ":/styles/Aqua.qss"},                 //
+    {"MaterialDark", ":/styles/MaterialDark.qss"}, //
+    {"Ubuntu", ":/styles/Ubuntu.qss"}              //
+};
+
 StyleLoader::StyleLoader(QObject *parent) : QObject(parent)
 {
 }

@@ -13,7 +13,7 @@ QLineEdit *LEFunc::New(QWidget *parent, const QString &lename, const QString &le
 
 PasswordLineEdit *LEFunc::NewPsw(QWidget *parent, const QString &lename, QLineEdit::EchoMode echostyle)
 {
-    auto le = new PasswordLineEdit(echostyle, parent);
+    auto le = new PasswordLineEdit(parent, echostyle);
     le->setObjectName(lename);
     return le;
 }

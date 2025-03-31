@@ -3,24 +3,17 @@
 #include <QKeySequence>
 #include <QMap>
 #include <QObject>
-#include <gen/singleton.h>
 #include <widgets/export.h>
 
 constexpr char defaultStyleFile[] = ":/lightstyle.qss";
 
-namespace Style
+class Style
 {
-const QMap<QString, QString> themes {
-    { "Light", defaultStyleFile },                   //
-    { "Dark", ":/styles/darkstyle.qss" },            //
-    { "Drakula", ":/styles/dracula.css" },           //
-    { "Aqua", ":/styles/Aqua.qss" },                 //
-    { "MaterialDark", ":/styles/MaterialDark.qss" }, //
-    { "Ubuntu", ":/styles/Ubuntu.qss" }              //
+public:
+    static QMap<QString, QString> themes;
 };
-}
 
-class WD_EXPORT StyleLoader : public QObject, public Singleton<StyleLoader>
+class WD_EXPORT StyleLoader : public QObject
 {
     Q_OBJECT
 
