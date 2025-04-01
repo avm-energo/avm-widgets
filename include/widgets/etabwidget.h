@@ -18,8 +18,9 @@
 #include <QTabBar>
 #include <QTabWidget>
 #include <QWidget>
+#include <widgets/export.h>
 
-class ETabBar : public QTabBar
+class WD_EXPORT ETabBar : public QTabBar
 {
     Q_OBJECT
 public:
@@ -31,7 +32,7 @@ protected:
 private slots:
 };
 
-class ETabWidget : public QTabWidget
+class WD_EXPORT ETabWidget : public QTabWidget
 {
     Q_OBJECT
 public:
