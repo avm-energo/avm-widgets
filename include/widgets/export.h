@@ -5,5 +5,5 @@
 #if defined(WD_EXPORTS)
 #define WD_EXPORT Q_DECL_EXPORT
 #else
-#define WD_EXPORT
+#define WD_EXPORT Q_DECL_IMPORT
 #endif

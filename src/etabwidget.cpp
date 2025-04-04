@@ -1,4 +1,5 @@
 #include <widgets/etabwidget.h>
+#include <widgets/etabbar.h>
 
 ETabWidget::ETabWidget(bool editable, const QString &widgetName, QWidget *parent) : QTabWidget(parent)
 {
@@ -57,19 +58,4 @@ void ETabWidget::tabClicked(int index)
         emit newTabCreated(plusTabIndex);
         setCurrentIndex(plusTabIndex);
     }
-}
-
-ETabBar::ETabBar(QWidget *parent) : QTabBar(parent)
-{
-}
-
-QSize ETabBar::tabSizeHint(int index) const
-{
-    int plusIndex = count() - 1;
-    if (index == plusIndex)
-    {
-        return fontMetrics().boundingRect(tabText(index)).size() + QSize(20, 20);
-    }
-    else
-        return QTabBar::tabSizeHint(index);
 }

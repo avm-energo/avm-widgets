@@ -17,26 +17,13 @@
 
 #include <QTabBar>
 #include <QTabWidget>
-#include <QWidget>
 #include <widgets/export.h>
-
-class WD_EXPORT ETabBar : public QTabBar
-{
-    Q_OBJECT
-public:
-    ETabBar(QWidget *parent = nullptr);
-
-protected:
-    QSize tabSizeHint(int index) const;
-
-private slots:
-};
 
 class WD_EXPORT ETabWidget : public QTabWidget
 {
     Q_OBJECT
 public:
-    ETabWidget(bool editable = false, const QString &widgetName = "", QWidget *parent = nullptr);
+     ETabWidget(bool editable = false, const QString &widgetName = "", QWidget *parent = nullptr);
 
     /// \brief Method adds tabs as it does the default QTabBar while initially creating
     int addTab(QWidget *widget, const QString &caption);
