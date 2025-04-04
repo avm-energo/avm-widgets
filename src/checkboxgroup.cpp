@@ -1,14 +1,12 @@
 #include "widgets/checkboxgroup.h"
 
+#include <QDebug>
+#include <QVBoxLayout>
 #include <widgets/checkboxgroup_p.h>
 #include <widgets/flowlayout.h>
 
-#include <QDebug>
-#include <QVBoxLayout>
-
 CheckBoxGroup::CheckBoxGroup(const QStringList &desc, const QList<int> &ignorePos, QWidget *parent)
-    : QWidget(parent)
-    , d_ptr(new CheckBoxGroupPrivate(desc.size()))
+    : QWidget(parent), d_ptr(new CheckBoxGroupPrivate(desc.size()))
 {
     Q_D(CheckBoxGroup);
     d->q_ptr = this;
@@ -24,20 +22,24 @@ CheckBoxGroup::CheckBoxGroup(const QStringList &desc, const QList<int> &ignorePo
         QCheckBox *checkBox = new QCheckBox(name, this);
         checkBox->setObjectName(QString::number(i));
         flowLayout->addWidget(checkBox);
-        connect(checkBox, &QCheckBox::stateChanged, this,
-            [=](const int value)
-            {
-                Qt::CheckState state = Qt::CheckState(value);
-                if (!(state == Qt::Checked && d->test(i)) && !(state == Qt::Unchecked && !d->test(i)))
-                    d->flip(i);
-            });
+#if QT_VERSION < QT_VERSION_CHECK(6, 8, 2)
+        connect(checkBox, &QCheckBox::stateChanged, this, [=](const int value) {
+            Qt::CheckState state = Qt::CheckState(value);
+            if (!(state == Qt::Checked && d->test(i)) && !(state == Qt::Unchecked && !d->test(i)))
+                d->flip(i);
+        });
+#else
+        connect(checkBox, &QCheckBox::checkStateChanged, this, [=](Qt::CheckState value) {
+            if (!(value == Qt::Checked && d->test(i)) && !(value == Qt::Unchecked && !d->test(i)))
+                d->flip(i);
+        });
+#endif
     }
     setLayout(flowLayout);
 }
 
 CheckBoxGroup::CheckBoxGroup(const QStringList &desc, QWidget *parent)
-    : QWidget(parent)
-    , d_ptr(new CheckBoxGroupPrivate(desc.size()))
+    : QWidget(parent), d_ptr(new CheckBoxGroupPrivate(desc.size()))
 {
     Q_D(CheckBoxGroup);
     d->q_ptr = this;
@@ -50,20 +52,24 @@ CheckBoxGroup::CheckBoxGroup(const QStringList &desc, QWidget *parent)
         QCheckBox *checkBox = new QCheckBox(name, this);
         checkBox->setObjectName(QString::number(i));
         flowLayout->addWidget(checkBox);
-        connect(checkBox, &QCheckBox::stateChanged, this,
-            [=](const int value)
-            {
-                Qt::CheckState state = Qt::CheckState(value);
-                if (!(state == Qt::Checked && d->test(i)) && !(state == Qt::Unchecked && !d->test(i)))
-                    d->flip(i);
-            });
+#if QT_VERSION < QT_VERSION_CHECK(6, 8, 2)
+        connect(checkBox, &QCheckBox::stateChanged, this, [=](const int value) {
+            Qt::CheckState state = Qt::CheckState(value);
+            if (!(state == Qt::Checked && d->test(i)) && !(state == Qt::Unchecked && !d->test(i)))
+                d->flip(i);
+        });
+#else
+        connect(checkBox, &QCheckBox::checkStateChanged, this, [=](Qt::CheckState value) {
+            if (!(value == Qt::Checked && d->test(i)) && !(value == Qt::Unchecked && !d->test(i)))
+                d->flip(i);
+        });
+#endif
     }
     setLayout(flowLayout);
 }
 
 CheckBoxGroup::CheckBoxGroup(const QStringList &desc, int count, QWidget *parent)
-    : QWidget(parent)
-    , d_ptr(new CheckBoxGroupPrivate(count))
+    : QWidget(parent), d_ptr(new CheckBoxGroupPrivate(count))
 {
     if (desc.size() != count)
     {
@@ -82,13 +88,18 @@ CheckBoxGroup::CheckBoxGroup(const QStringList &desc, int count, QWidget *parent
         QCheckBox *checkBox = new QCheckBox(name, this);
         checkBox->setObjectName(QString::number(i));
         flowLayout->addWidget(checkBox);
-        connect(checkBox, &QCheckBox::stateChanged, this,
-            [=](const int value)
-            {
-                Qt::CheckState state = Qt::CheckState(value);
-                if (!(state == Qt::Checked && d->test(i)) && !(state == Qt::Unchecked && !d->test(i)))
-                    d->flip(i);
-            });
+#if QT_VERSION < QT_VERSION_CHECK(6, 8, 2)
+        connect(checkBox, &QCheckBox::stateChanged, this, [=](const int value) {
+            Qt::CheckState state = Qt::CheckState(value);
+            if (!(state == Qt::Checked && d->test(i)) && !(state == Qt::Unchecked && !d->test(i)))
+                d->flip(i);
+        });
+#else
+        connect(checkBox, &QCheckBox::checkStateChanged, this, [=](Qt::CheckState value) {
+            if (!(value == Qt::Checked && d->test(i)) && !(value == Qt::Unchecked && !d->test(i)))
+                d->flip(i);
+        });
+#endif
     }
     setLayout(flowLayout);
 }

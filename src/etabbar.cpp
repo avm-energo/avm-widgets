@@ -1,4 +1,4 @@
-#include <include/widgets/etabbar.h>
+#include <widgets/etabbar.h>
 
 ETabBar::ETabBar(QWidget *parent) : QTabBar(parent)
 {
