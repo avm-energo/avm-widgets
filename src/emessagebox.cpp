@@ -3,6 +3,12 @@
 #include <widgets/lblfunc.h>
 
 bool EMessageBox::m_result = false;
+QByteArray EMessageBox::m_hash = "d93fdd6d1fb5afcca939fa650b62541d09dbcb766f41c39352dc75f348fb35dc";
+
+void EMessageBox::setHash(const QByteArray &ba)
+{
+    m_hash = ba;
+}
 
 bool EMessageBox::password(QWidget *parent, const QString &hash)
 {

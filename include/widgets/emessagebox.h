@@ -8,7 +8,9 @@ class WD_EXPORT EMessageBox
 {
 public:
     static bool m_result;
-    static bool password(QWidget *parent, const QString &hash);
+    static QByteArray m_hash;
+    static void setHash(const QByteArray &ba);
+    static bool password(QWidget *parent, const QString &hash = m_hash);
     static void information(QWidget *parent, const QString &msg);
     static bool question(QWidget *parent, const QString &msg); // yes (1) / no (0)
     static void warning(QWidget *parent, const QString &msg);
