@@ -7,14 +7,15 @@
 #include <QMetaEnum>
 #include <QSettings>
 
-QMap<QString, QString> Style::themes{
-    {"Light", defaultStyleFile},                   //
-    {"Dark", ":/styles/darkstyle.qss"},            //
-    {"Drakula", ":/styles/dracula.css"},           //
-    {"Aqua", ":/styles/Aqua.qss"},                 //
-    {"MaterialDark", ":/styles/MaterialDark.qss"}, //
-    {"Ubuntu", ":/styles/Ubuntu.qss"}              //
+QMap<QString, QString> StyleLoader::s_themes {
+    { "Light", defaultStyleFile },                   //
+    { "Dark", ":/styles/darkstyle.qss" },            //
+    { "Drakula", ":/styles/dracula.css" },           //
+    { "Aqua", ":/styles/Aqua.qss" },                 //
+    { "MaterialDark", ":/styles/MaterialDark.qss" }, //
+    { "Ubuntu", ":/styles/Ubuntu.qss" }              //
 };
+QString StyleLoader::s_filename = defaultStyleFile;
 
 StyleLoader::StyleLoader(QObject *parent) : QObject(parent)
 {
@@ -22,16 +23,16 @@ StyleLoader::StyleLoader(QObject *parent) : QObject(parent)
 
 QStringList StyleLoader::availableStyles()
 {
-    return Style::themes.keys();
+    return s_themes.keys();
 }
 
 void StyleLoader::setStyle(const QString &styleName)
 {
-    m_filename = Style::themes.value(styleName);
-    QFile file(m_filename);
+    s_filename = s_themes.value(styleName);
+    QFile file(s_filename);
     if (!file.open(QIODevice::ReadOnly))
     {
-        qWarning() << "Cannot open stylesheet file " << m_filename;
+        qWarning() << "Cannot open stylesheet file " << s_filename;
         return;
     }
     QString stylesheet = QString::fromUtf8(file.readAll());
@@ -40,6 +41,6 @@ void StyleLoader::setStyle(const QString &styleName)
 
 QString StyleLoader::styleName()
 {
-    const QString styleName = Style::themes.key(m_filename);
+    const QString styleName = s_themes.key(s_filename);
     return styleName;
 }

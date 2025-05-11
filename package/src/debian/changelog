@@ -1,3 +1,16 @@
+libavm-widgets (2.2.1) unstable; urgency=low
+
+  [*] StyleLoader refactoring
+  [^] avm-gen to 1.9.14
+
+ -- AVM-Energo <support@avmenergo.ru>  Sun, 11 May 2025 22:15:18 +0300
+
+libavm-widgets (2.2.0) unstable; urgency=low
+
+  [*] many refactoring and deprecated removings
+
+ -- AVM-Energo <support@avmenergo.ru>  Wed, 07 May 2025 16:11:56 +0300
+
 libavm-widgets (2.1.0) unstable; urgency=low
 
   [+] FileFunc::New method added to choose file or directory
