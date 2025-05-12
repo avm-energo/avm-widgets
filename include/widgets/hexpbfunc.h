@@ -20,8 +20,8 @@ public:
         return pb;
     }
 
-    static void SetProcessed(QWidget *parent, const QString &name);
-    static void SetRestricted(QWidget *parent, const QString &name);
+    static void setProcessed(QWidget *parent, const QString &name);
+    static void setRestricted(QWidget *parent, const QString &name);
     static void setNormal(QWidget *parent, const QString &name);
     static void setIcon(QWidget *parent, const QString &name, QStringList &attrs, QStringList &values);
 };

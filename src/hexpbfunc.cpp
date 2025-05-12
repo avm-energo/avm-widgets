@@ -4,14 +4,14 @@
 #include <gen/xml/xmlattr.h>
 #include <widgets/hexpbfunc.h>
 
-void HexPBFunc::SetProcessed(QWidget *parent, const QString &name)
+void HexPBFunc::setProcessed(QWidget *parent, const QString &name)
 {
     QStringList attrs = { "stroke", "stroke-width", "fill", "fill-opacity" };
     QStringList values = { "#7abe7a", "1.0", "#5ba166", "1.0" };
     setIcon(parent, name, attrs, values);
 }
 
-void HexPBFunc::SetRestricted(QWidget *parent, const QString &name)
+void HexPBFunc::setRestricted(QWidget *parent, const QString &name)
 {
     QStringList attrs = { "stroke", "stroke-width" };
     QStringList values = { "#FF0000", "0.1" };
