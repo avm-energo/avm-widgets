@@ -4,14 +4,14 @@
 #include <QVBoxLayout>
 #include <widgets/flowlayout.h>
 
-CheckBoxGroup::CheckBoxGroup(const QStringList &desc, const QList<int> &ignorePos, QWidget *parent)
-    : QWidget(parent)
+CheckBoxGroup::CheckBoxGroup(const QStringList &desc, const QList<int> &ignorePos, QWidget *parent) : QWidget(parent)
 {
     setDescription(desc);
     setHiddenPositions(ignorePos);
     FlowLayout *flowLayout = new FlowLayout;
     flowLayout->setObjectName(desc.at(0));
-    for (auto i = 0; i != description().size(); ++i) {
+    for (auto i = 0; i != description().size(); ++i)
+    {
         const QString name = description().at(i);
         if (ignorePositions().contains(i))
             continue;
@@ -34,13 +34,13 @@ CheckBoxGroup::CheckBoxGroup(const QStringList &desc, const QList<int> &ignorePo
     setLayout(flowLayout);
 }
 
-CheckBoxGroup::CheckBoxGroup(const QStringList &desc, QWidget *parent)
-    : QWidget(parent)
+CheckBoxGroup::CheckBoxGroup(const QStringList &desc, QWidget *parent) : QWidget(parent)
 {
     setDescription(desc);
     FlowLayout *flowLayout = new FlowLayout;
     flowLayout->setObjectName(desc.at(0));
-    for (auto i = 0; i != description().size(); ++i) {
+    for (auto i = 0; i != description().size(); ++i)
+    {
         const QString name = description().at(i);
         QCheckBox *checkBox = new QCheckBox(name, this);
         checkBox->setObjectName(QString::number(i));
@@ -61,8 +61,7 @@ CheckBoxGroup::CheckBoxGroup(const QStringList &desc, QWidget *parent)
     setLayout(flowLayout);
 }
 
-CheckBoxGroup::CheckBoxGroup(const QStringList &desc, int count, QWidget *parent)
-    : QWidget(parent)
+CheckBoxGroup::CheckBoxGroup(const QStringList &desc, int count, QWidget *parent) : QWidget(parent)
 {
     if (desc.size() != count)
     {
@@ -73,7 +72,8 @@ CheckBoxGroup::CheckBoxGroup(const QStringList &desc, int count, QWidget *parent
     FlowLayout *flowLayout = new FlowLayout;
     flowLayout->setObjectName(desc.at(0));
 
-    for (auto i = 0; i != std::min(int(description().size()), count); ++i) {
+    for (auto i = 0; i != std::min(int(description().size()), count); ++i)
+    {
         const QString name = description().at(i);
         QCheckBox *checkBox = new QCheckBox(name, this);
         checkBox->setObjectName(QString::number(i));
@@ -97,13 +97,3 @@ CheckBoxGroup::CheckBoxGroup(const QStringList &desc, int count, QWidget *parent
 CheckBoxGroup::~CheckBoxGroup()
 {
 }
-
-// template void CheckBoxGroup::setBits(const quint64 value);
-// template void CheckBoxGroup::setBits(const quint32 value);
-// template void CheckBoxGroup::setBits(const quint16 value);
-// template void CheckBoxGroup::setBits(const quint8 value);
-
-// template quint64 CheckBoxGroup::bits();
-// template quint32 CheckBoxGroup::bits();
-// template quint16 CheckBoxGroup::bits();
-// template quint8 CheckBoxGroup::bits();

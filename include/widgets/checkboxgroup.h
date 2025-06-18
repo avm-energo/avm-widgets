@@ -17,12 +17,12 @@ public:
     CheckBoxGroup(const QStringList &desc, int count, QWidget *parent = nullptr);
     ~CheckBoxGroup() override;
 
-    template<typename T>
-    void setUBits(const T value)
+    template <typename T, std::enable_if_t<std::is_unsigned_v<T>, bool> = true> void setUBits(const T &value)
     {
         m_bitset = std::bitset<BITSET_MAX_COUNT>(value);
         auto checkBoxes = findChildren<QCheckBox *>();
-        for (QCheckBox *checkBox : checkBoxes) {
+        for (QCheckBox *checkBox : checkBoxes)
+        {
             auto status = false;
             auto number = checkBox->objectName().toUInt(&status);
             if (!status)
@@ -31,8 +31,7 @@ public:
         }
     }
 
-    template<typename T, std::size_t SIZE>
-    void setABits(const std::array<T, SIZE> &arr)
+    template <typename T, std::enable_if_t<std_ext::is_container<T>::value, bool> = true> void setABits(const T &arr)
     {
         QList<QCheckBox *> checkBoxes = findChildren<QCheckBox *>();
         for (QCheckBox *checkBox : checkBoxes)
@@ -46,19 +45,18 @@ public:
         }
     }
 
-    template<typename T>
-    T uBits()
+    template <typename T, std::enable_if_t<std::is_unsigned_v<T>, bool> = true> T uBits()
     {
         const T value = m_bitset.to_ulong();
         return value;
     }
 
-    template<typename T, std::size_t SIZE>
-    std::array<T, SIZE> aBits()
+    template <typename T, std::enable_if_t<std_ext::is_container<T>::value, bool> = true> T aBits()
     {
-        std::array<T, SIZE> arr;
+        T arr;
         QList<QCheckBox *> checkBoxes = findChildren<QCheckBox *>();
-        for (QCheckBox *checkBox : checkBoxes) {
+        for (QCheckBox *checkBox : checkBoxes)
+        {
             bool status = false;
             auto number = checkBox->objectName().toUInt(&status);
             if (!status)
@@ -69,15 +67,30 @@ public:
         return arr;
     }
 
-    QList<int> ignorePositions() const { return m_hiddenPositions; }
+    QList<int> ignorePositions() const
+    {
+        return m_hiddenPositions;
+    }
 
-    bool test(size_t i) const { return m_bitset.test(i); }
+    bool test(size_t i) const
+    {
+        return m_bitset.test(i);
+    }
 
-    void flip(size_t i) { m_bitset.flip(i); }
+    void flip(size_t i)
+    {
+        m_bitset.flip(i);
+    }
 
-    QStringList description() const { return m_description; }
+    QStringList description() const
+    {
+        return m_description;
+    }
 
-    void setDescription(const QStringList &description) { m_description = description; }
+    void setDescription(const QStringList &description)
+    {
+        m_description = description;
+    }
 
     void setHiddenPositions(const QList<int> &hiddenPositions)
     {
@@ -90,13 +103,3 @@ private:
     std::bitset<BITSET_MAX_COUNT> m_bitset; // checkbox group maximum items size is 32
     QStringList m_description;
 };
-
-extern template void CheckBoxGroup::setUBits(const quint64 value);
-extern template void CheckBoxGroup::setUBits(const quint32 value);
-extern template void CheckBoxGroup::setUBits(const quint16 value);
-extern template void CheckBoxGroup::setUBits(const quint8 value);
-
-// extern template quint64 CheckBoxGroup::uBits();
-// extern template quint32 CheckBoxGroup::uBits();
-// extern template quint16 CheckBoxGroup::uBits();
-// extern template quint8 CheckBoxGroup::uBits();
