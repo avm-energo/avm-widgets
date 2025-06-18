@@ -1,8 +1,9 @@
 #pragma once
 
 #include <QDialog>
+#include <widgets/export.h>
 
-class EPopup : public QDialog
+class WD_EXPORT EPopup : public QDialog
 {
     Q_OBJECT
 public:

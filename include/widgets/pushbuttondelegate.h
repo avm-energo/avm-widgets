@@ -2,8 +2,9 @@
 
 #include <QObject>
 #include <QStyledItemDelegate>
+#include <widgets/export.h>
 
-class PushButtonDelegate : public QStyledItemDelegate
+class WD_EXPORT PushButtonDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 

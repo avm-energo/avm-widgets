@@ -1,8 +1,9 @@
 #pragma once
 
 #include "epopup.h"
+#include <widgets/export.h>
 
-class EEditablePopup : public EPopup
+class WD_EXPORT EEditablePopup : public EPopup
 {
     Q_OBJECT
 public:
