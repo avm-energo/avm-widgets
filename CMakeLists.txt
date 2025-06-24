@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 
 project(avm-widgets LANGUAGES CXX
   DESCRIPTION "Widgets library for AVM-Energo C++ projects"
-  VERSION 2.2.2)
+  VERSION 2.2.3)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -61,7 +61,7 @@ if(BUILD_SHARED_LIBS)
     target_compile_definitions(${PROJECT_NAME} INTERFACE -DWD_IMPORTS)
 else()
     message(STATUS "WIDGETS STATIC LIBRARY")
-    add_library(${PROJECT_NAME} STATIC ${files_h} ${files_cpp} ${CMAKE_CURRENT_SOURCE_DIR}/styles/styles.qrc)
+    add_library(${PROJECT_NAME} STATIC ${files_h} ${files_cpp} ${files_qrc})
     target_compile_definitions(${PROJECT_NAME} PUBLIC -DHAVE_STATIC_BUILD)
 endif()
 

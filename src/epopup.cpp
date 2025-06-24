@@ -1,12 +1,12 @@
-#include "widgets/epopup.h"
-
 #include <QKeyEvent>
 #include <QVBoxLayout>
+#include <widgets/epopup.h>
 #include <widgets/graphfunc.h>
 #include <widgets/lblfunc.h>
 #include <widgets/lefunc.h>
 #include <widgets/passwordlineedit.h>
 #include <widgets/pbfunc.h>
+#include <widgets/styleloader.h>
 
 EPopup::EPopup(QWidget *parent) : QDialog(parent)
 {
@@ -33,27 +33,30 @@ void EPopup::Create(MessageTypes &type, QWidget *w, QWidget *parent)
     struct msgsStruct
     {
         QString pxFile;
-        QString bgrdColor;
+        QString bgrdColorLight;
+        QString bgrdColorDark;
     };
 
     QMap<MessageTypes, msgsStruct> map = {
-        { INFOMESSAGE, { ":/icons/info-hex.svg", "c8fcff" } },
-        { WARNMESSAGE, { ":/icons/warn-hex.svg", "ffffc3" } },
-        { QUESTMSG, { ":/icons/question-hex.svg", "b5b6ff" } },
-        { ERMESSAGE, { ":/icons/err-hex.svg", "ffd4d4" } },
-        { NEXTMSG, { ":/icons/next-hex.svg", "d6ffce" } },
-        { WITHOUTANYBUTTONS, { ":/icons/ordinary-hex.svg", "f3ffc5" } },
+        { INFOMESSAGE, { ":/icons/info-hex.svg", "d6ffce", "158000" } },
+        { WARNMESSAGE, { ":/icons/warn-hex.svg", "ffffc3", "787800" } },
+        { QUESTMSG, { ":/icons/question-hex.svg", "b5b6ff", "2f32ff" } },
+        { ERMESSAGE, { ":/icons/err-hex.svg", "ffd4d4", "740000" } },
+        { NEXTMSG, { ":/icons/next-hex.svg", "d6ffce", "105b00" } },
+        { WITHOUTANYBUTTONS, { ":/icons/ordinary-hex.svg", "f3ffc5", "475800" } },
     };
     setAttribute(Qt::WA_DeleteOnClose);
-    setStyleSheet("QDialog {background-color: #" + map[type].bgrdColor + ";}");
-    w->setStyleSheet("QWidget {background-color: #" + map[type].bgrdColor + ";}");
+    QString backgroundColor = "{background-color: #"
+        + (StyleLoader::styleName().compare("Dark") ? map[type].bgrdColorLight : map[type].bgrdColorDark) + " };";
+    setStyleSheet("QDialog " + backgroundColor);
+    w->setStyleSheet("QWidget " + backgroundColor);
     if (type < c_captions.size())
         setWindowTitle(c_captions.at(type));
     QVBoxLayout *lyout = new QVBoxLayout;
     QHBoxLayout *hlyout = new QHBoxLayout;
 
     auto icon = GraphFunc::NewIcon(parent, map[type].pxFile);
-    icon->setStyleSheet("QWidget {background-color: #" + map[type].bgrdColor + ";}");
+    icon->setStyleSheet("QWidget " + backgroundColor);
     hlyout->addWidget(icon);
     hlyout->addWidget(w);
     lyout->addLayout(hlyout);

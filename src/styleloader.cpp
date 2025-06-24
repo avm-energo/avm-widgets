@@ -8,12 +8,8 @@
 #include <QSettings>
 
 QMap<QString, QString> StyleLoader::s_themes {
-    { "Light", defaultStyleFile },                   //
-    { "Dark", ":/styles/darkstyle.qss" },            //
-    { "Drakula", ":/styles/dracula.css" },           //
-    { "Aqua", ":/styles/Aqua.qss" },                 //
-    { "MaterialDark", ":/styles/MaterialDark.qss" }, //
-    { "Ubuntu", ":/styles/Ubuntu.qss" }              //
+    { "Light", defaultStyleFile },        //
+    { "Dark", ":/styles/darkstyle.qss" }, //
 };
 QString StyleLoader::s_filename = defaultStyleFile;
 

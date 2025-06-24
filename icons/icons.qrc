@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>err-hex.svg</file>
+        <file>info-hex.svg</file>
+        <file>next-hex.svg</file>
+        <file>ordinary-hex.svg</file>
+        <file>psw-hex.svg</file>
+        <file>pswshow.png</file>
+        <file>question-hex.svg</file>
+        <file>warn-hex.svg</file>
+    </qresource>
+</RCC>

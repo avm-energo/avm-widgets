@@ -6,11 +6,13 @@
 #include <widgets/graphfunc.h>
 #include <widgets/lblfunc.h>
 #include <widgets/lefunc.h>
+#include <widgets/styleloader.h>
 
 EPasswordPopup::EPasswordPopup(const QString &hash, QWidget *parent) : EPopup(parent)
 {
-    constexpr auto dialogStyle = "QDialog { background-color: #ffe3f9; }";
-    constexpr auto widgetStyle = "QWidget { background-color: #ffe3f9; }";
+    QString backgroundColor = (StyleLoader::styleName().compare("Dark") ? "ffe3f9" : "b6008f");
+    QString dialogStyle = "QDialog { background-color: #" + backgroundColor + "};";
+    QString widgetStyle = "QWidget { background-color: #" + backgroundColor + " }";
     isAboutToClose = false;
     m_hash = hash;
     QHBoxLayout *hlyout = new QHBoxLayout;

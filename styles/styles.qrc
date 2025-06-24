@@ -418,11 +418,7 @@
         <file>light/rc/window_undock_pressed@2x.png</file>
     </qresource>
     <qresource prefix="/styles">
-        <file>Aqua.qss</file>
         <file>darkstyle.qss</file>
-        <file>dracula.css</file>
         <file>lightstyle.qss</file>
-        <file>MaterialDark.qss</file>
-        <file>Ubuntu.qss</file>
     </qresource>
 </RCC>
