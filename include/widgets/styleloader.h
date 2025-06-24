@@ -4,7 +4,7 @@
 #include <QObject>
 #include <widgets/export.h>
 
-constexpr char defaultStyleFile[] = ":/lightstyle.qss";
+constexpr char defaultStyleFile[] = ":/styles/lightstyle.qss";
 
 class WD_EXPORT StyleLoader : public QObject
 {
