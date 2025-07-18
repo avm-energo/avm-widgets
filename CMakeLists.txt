@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 
 project(avm-widgets LANGUAGES CXX
   DESCRIPTION "Widgets library for AVM-Energo C++ projects"
-  VERSION 2.2.3)
+  VERSION 2.2.4)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -128,11 +128,6 @@ install(EXPORT ${PROJECT_NAME}_Targets
 install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
         "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/cmake)
-
-# if (NOT ${LibLZMA_FOUND})
-#     install(FILES "${liblzma_BINARY_DIR}/liblzma.dll" DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME})
-#     install(FILES "${liblzma_BINARY_DIR}/lzma.lib" DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME})
-# endif()
 
 set(VERSION_IN ${CMAKE_CURRENT_SOURCE_DIR}/VERSION.in)
 set(VERSION_OUT ${CMAKE_CURRENT_SOURCE_DIR}/package/src/VERSION)
