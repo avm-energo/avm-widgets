@@ -10,8 +10,10 @@ class WD_EXPORT LEFunc
 public:
     [[nodiscard]] static QLineEdit *New(
         QWidget *parent, const QString &lename, const QString &letext = "", const QString &tooltip = "");
-    [[nodiscard]] static PasswordLineEdit *NewPsw(
-        QWidget *parent, const QString &lename, QLineEdit::EchoMode echostyle = QLineEdit::Normal);
+    [[nodiscard]] static PasswordLineEdit *NewPsw(QWidget *parent,
+                                                  const QString &lename,
+                                                  QLineEdit::EchoMode echostyle = QLineEdit::
+                                                      Password);
     static bool SetData(QObject *parent, const QString &lename, const QString &levalue, const QString &restring = "");
     [[nodiscard]] static QString Data(QObject *parent, const QString &lename);
 
@@ -36,4 +38,5 @@ public:
     static bool SetColor(QWidget *parent, const QString &lename, const QColor &color);
 
     [[nodiscard]] static QWidget *NewLBL(QWidget *parent, QString caption, QString lename, bool enabled = false);
+    [[nodiscard]] QWidget *NewPswLBL(QWidget *parent, QString caption, QString lename);
 };

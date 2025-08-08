@@ -9,8 +9,9 @@ class WD_EXPORT PasswordLineEdit : public QWidget
 
 public:
     explicit PasswordLineEdit(QWidget *parent = Q_NULLPTR,
+                              const QString &lename = "",
                               QLineEdit::EchoMode echostyle = QLineEdit::Password);
 
 private slots:
-    void PswLEToggleEchoMode();
+    void PswLEToggleEchoMode(const QString &lename);
 };

@@ -13,8 +13,7 @@ QLineEdit *LEFunc::New(QWidget *parent, const QString &lename, const QString &le
 
 PasswordLineEdit *LEFunc::NewPsw(QWidget *parent, const QString &lename, QLineEdit::EchoMode echostyle)
 {
-    auto le = new PasswordLineEdit(parent, echostyle);
-    le->setObjectName(lename);
+    auto le = new PasswordLineEdit(parent, lename, echostyle);
     return le;
 }
 
@@ -62,6 +61,19 @@ QWidget *LEFunc::NewLBL(QWidget *parent, QString caption, QString lename, bool e
     auto le = new QLineEdit("", widget);
     le->setObjectName(lename);
     le->setEnabled(enabled);
+    hlyout->addWidget(le, 10);
+    widget->setLayout(hlyout);
+    return widget;
+}
+
+QWidget *LEFunc::NewPswLBL(QWidget *parent, QString caption, QString lename)
+{
+    auto widget = new QWidget(parent);
+    widget->setContentsMargins(0, 0, 0, 0);
+    auto hlyout = new QHBoxLayout;
+    auto lbl = new QLabel(caption, widget);
+    hlyout->addWidget(lbl, 0);
+    auto le = NewPsw(parent, lename);
     hlyout->addWidget(le, 10);
     widget->setLayout(hlyout);
     return widget;

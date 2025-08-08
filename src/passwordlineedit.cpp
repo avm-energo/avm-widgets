@@ -5,11 +5,11 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 
-PasswordLineEdit::PasswordLineEdit(QWidget *parent, QLineEdit::EchoMode echostyle)
+PasswordLineEdit::PasswordLineEdit(QWidget *parent, const QString &lename, QLineEdit::EchoMode echostyle)
     : QWidget(parent)
 {
     QHBoxLayout *hlyout = new QHBoxLayout;
-    QLineEdit *le = LEFunc::New(parent, "pswle");
+    QLineEdit *le = LEFunc::New(parent, lename);
     le->setEchoMode(echostyle);
     hlyout->addWidget(le, 10);
     QPushButton *pb = new QPushButton(parent);
@@ -24,9 +24,9 @@ PasswordLineEdit::PasswordLineEdit(QWidget *parent, QLineEdit::EchoMode echostyl
     setLayout(hlyout);
 }
 
-void PasswordLineEdit::PswLEToggleEchoMode()
+void PasswordLineEdit::PswLEToggleEchoMode(const QString &lename)
 {
-    QLineEdit *le = this->findChild<QLineEdit *>("pswle");
+    QLineEdit *le = this->findChild<QLineEdit *>(lename);
     if (le == nullptr) {
         qDebug("LE не определён");
         return;
