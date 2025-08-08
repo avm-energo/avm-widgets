@@ -38,5 +38,5 @@ public:
     static bool SetColor(QWidget *parent, const QString &lename, const QColor &color);
 
     [[nodiscard]] static QWidget *NewLBL(QWidget *parent, QString caption, QString lename, bool enabled = false);
-    [[nodiscard]] QWidget *NewPswLBL(QWidget *parent, QString caption, QString lename);
+    [[nodiscard]] static QWidget *NewPswLBL(QWidget *parent, QString caption, QString lename);
 };
