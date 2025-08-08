@@ -18,7 +18,7 @@ CheckBoxGroup::CheckBoxGroup(const QStringList &desc, const QList<int> &ignorePo
         QCheckBox *checkBox = new QCheckBox(name, this);
         checkBox->setObjectName(QString::number(i));
         flowLayout->addWidget(checkBox);
-#if QT_VERSION < QT_VERSION_CHECK(6, 8, 2)
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
         connect(checkBox, &QCheckBox::stateChanged, this, [=](const int value) {
             Qt::CheckState state = Qt::CheckState(value);
             if (!(state == Qt::Checked && test(i)) && !(state == Qt::Unchecked && !test(i)))
@@ -45,7 +45,7 @@ CheckBoxGroup::CheckBoxGroup(const QStringList &desc, QWidget *parent) : QWidget
         QCheckBox *checkBox = new QCheckBox(name, this);
         checkBox->setObjectName(QString::number(i));
         flowLayout->addWidget(checkBox);
-#if QT_VERSION < QT_VERSION_CHECK(6, 8, 2)
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
         connect(checkBox, &QCheckBox::stateChanged, this, [=](const int value) {
             Qt::CheckState state = Qt::CheckState(value);
             if (!(state == Qt::Checked && test(i)) && !(state == Qt::Unchecked && !test(i)))
@@ -78,7 +78,7 @@ CheckBoxGroup::CheckBoxGroup(const QStringList &desc, int count, QWidget *parent
         QCheckBox *checkBox = new QCheckBox(name, this);
         checkBox->setObjectName(QString::number(i));
         flowLayout->addWidget(checkBox);
-#if QT_VERSION < QT_VERSION_CHECK(6, 8, 2)
+#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
         connect(checkBox, &QCheckBox::stateChanged, this, [=](const int value) {
             Qt::CheckState state = Qt::CheckState(value);
             if (!(state == Qt::Checked && test(i)) && !(state == Qt::Unchecked && !test(i)))
