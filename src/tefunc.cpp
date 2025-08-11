@@ -9,6 +9,13 @@ bool TEFunc::SetData(QWidget *parent, const QString &tename, const QString &tete
     return true;
 }
 
+QTextEdit *TEFunc::New(QWidget *parent, const QString &tename)
+{
+    QTextEdit *te = new QTextEdit(parent);
+    te->setObjectName(tename);
+    return te;
+}
+
 bool TEFunc::AppendData(QWidget *parent, const QString &tename, const QString &tetext)
 {
     auto te = parent->findChild<QTextEdit *>(tename);
