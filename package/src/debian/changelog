@@ -1,3 +1,11 @@
+libavm-widgets (2.2.5) unstable; urgency=low
+
+  [+] progressbar PrBFunc added
+  [+] EFunc::NewPswLBL
+  [+] TEFunc::New
+
+ -- AVM-Energo <support@avmenergo.ru> Mon, 11 Aug 2025 15:15:11 +0300
+
 libavm-widgets (2.2.4) unstable; urgency=low
 
   [*] libavm-gen upto 1.10.0 (xz -> libzip)
