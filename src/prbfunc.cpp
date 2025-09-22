@@ -4,12 +4,12 @@
 
 QProgressBar *PrbFunc::New(QWidget *parent, const QString &prbname)
 {
-    auto rb = new QProgressBar(parent);
-    rb->setObjectName(prbname);
-    return rb;
+    auto prb = new QProgressBar(parent);
+    prb->setObjectName(prbname);
+    return prb;
 }
 
-QWidget *PrbFunc::NewLBL(QWidget *parent, const QString &caption, const QString &prbname)
+QWidget *PrbFunc::NewLBL(QWidget *parent, const QString &caption, const QString &prbname, const QString &format)
 {
     auto widget = new QWidget(parent);
     widget->setContentsMargins(0, 0, 0, 0);
@@ -17,6 +17,7 @@ QWidget *PrbFunc::NewLBL(QWidget *parent, const QString &caption, const QString 
     auto lbl = new QLabel(caption, widget);
     hlyout->addWidget(lbl, 0);
     auto prb = New(widget, prbname);
+    prb->setFormat(format);
     hlyout->addWidget(prb, 10);
     widget->setLayout(hlyout);
     return widget;
