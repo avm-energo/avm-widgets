@@ -1,0 +1,67 @@
+libavm-widgets-dev (2.2.5) unstable; urgency=low
+
+  [+] progressbar PrBFunc added
+  [+] EFunc::NewPswLBL
+  [+] TEFunc::New
+
+ -- AVM-Energo <support@avmenergo.ru> Mon, 11 Aug 2025 15:15:11 +0300
+
+libavm-widgets-dev (2.2.4) unstable; urgency=low
+
+  [*] libavm-gen upto 1.10.0 (xz -> libzip)
+
+ -- AVM-Energo <support@avmenergo.ru> Fri, 18 Jul 2025 15:32:40 +0300
+
+libavm-widgets-dev (2.2.3) unstable; urgency=low
+
+  [*] theme & colors fixes
+
+ -- AVM-Energo <support@avmenergo.ru> Fri, 18 Jul 2025 15:29:40 +0300
+
+libavm-widgets-dev (2.2.2) unstable; urgency=low
+
+  [*] CheckBoxGroup refactoring
+  [*] some export functions
+
+ -- AVM-Energo <support@avmenergo.ru>  Wed, 18 Jun 2025 12:36:40 +0300
+
+libavm-widgets-dev (2.2.1) unstable; urgency=low
+
+  [*] StyleLoader refactoring
+  [^] avm-gen to 1.9.14
+
+ -- AVM-Energo <support@avmenergo.ru>  Sun, 11 May 2025 22:15:18 +0300
+
+libavm-widgets-dev (2.2.0) unstable; urgency=low
+
+  [*] many refactoring and deprecated removings
+
+ -- AVM-Energo <support@avmenergo.ru>  Wed, 07 May 2025 16:11:56 +0300
+
+libavm-widgets-dev (2.1.0) unstable; urgency=low
+
+  [+] FileFunc::New method added to choose file or directory
+
+ -- AVM-Energo <support@avmenergo.ru>  Fri, 21 Mar 2025 16:11:56 +0300
+
+libavm-widgets-dev (2.0.0) unstable; urgency=low
+
+  [*] Big refactoring
+  [*] EEditablePopup, EPasswordPopup and EMessageBox are now in separate classes
+  [*] some *func are now have methods NewLBL to let a label prepend widget
+
+ -- AVM-Energo <support@avmenergo.ru>  Fri, 07 Mar 2025 09:31:55 +0300
+
+libavm-widgets-dev (1.1.0) unstable; urgency=low
+
+  * ETabWidget added
+  * libavm-gen v1.9.3
+
+ -- AVM-Energo <support@avmenergo.ru>  Thu, 06 Mar 2025 13:48:54 +0300
+
+libavm-widgets-dev (1.0.0) unstable; urgency=low
+
+  * first release
+
+ -- AVM-Energo <support@avmenergo.ru>  Thu, 06 Feb 2025 12:52:46 +0300
+
