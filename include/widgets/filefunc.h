@@ -22,6 +22,8 @@ public:
     [[nodiscard]] static QString ChooseDirectoryForOpen(QWidget *parent);
     static QWidget *New(QWidget *parent, const QString &wname, WidgetTypes type = WidgetTypes::FILE,
         const QString &mask = "Все файлы (*.*)", const QString &path = "");
+    static QWidget *NewLBL(QWidget *parent, const QString &lbltext, const QString &wname,
+        WidgetTypes type = WidgetTypes::FILE, const QString &mask = "Все файлы (*.*)", const QString &path = "");
 
 private:
     static void setWorkDir(const QString &dir);

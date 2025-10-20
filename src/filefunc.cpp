@@ -2,6 +2,7 @@
 #include <QHBoxLayout>
 #include <gen/settings.h>
 #include <widgets/filefunc.h>
+#include <widgets/lblfunc.h>
 #include <widgets/lefunc.h>
 #include <widgets/pbfunc.h>
 FileFunc::FileFunc()
@@ -61,6 +62,17 @@ QWidget *FileFunc::New(
             LEFunc::SetData(parent, wname, ChooseDirectoryForOpen(parent));
     }));
     LEFunc::SetData(parent, wname, path);
+    w->setLayout(hlyout);
+    return w;
+}
+
+QWidget *FileFunc::NewLBL(QWidget *parent, const QString &lbltext, const QString &wname, WidgetTypes type,
+    const QString &mask, const QString &path)
+{
+    QWidget *w = new QWidget;
+    QHBoxLayout *hlyout = new QHBoxLayout;
+    hlyout->addWidget(LBLFunc::New(parent, lbltext));
+    hlyout->addWidget(New(parent, wname, type, mask, path));
     w->setLayout(hlyout);
     return w;
 }
