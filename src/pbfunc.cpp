@@ -1,6 +1,6 @@
-#include <widgets/pbfunc.h>
+#include <avm-widgets/pbfunc.h>
 
-QPushButton *PBFunc::NewCommon(
+QPushButton *PBFunc::newCommon(
     QWidget *parent, const QString &pbname, const QString &text, const QString &icon, const QString &pbtooltip)
 {
     auto pb = new QPushButton(text, parent);

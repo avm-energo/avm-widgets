@@ -1,21 +1,23 @@
+#include <QHBoxLayout>
+#include <QVariant>
+#include <avm-widgets/lblfunc.h>
 #include <gen/colors.h>
 #include <gen/error.h>
-#include <widgets/lblfunc.h>
 
-#include <QHBoxLayout>
+LBLFunc::LBLFunc()
+{
+}
 
-LBLFunc::LBLFunc() { }
-
-QWidget *LBLFunc::NewLBL(QWidget *parent, QString lblname, QString caption, bool enabled)
+QWidget *LBLFunc::newLBL(QWidget *parent, QString lblname, QString caption, bool enabled)
 {
     static constexpr char valuesFormat[]
         = "QLabel {border: 1px solid green; border-radius: 4px; padding: 1px; font: bold; }";
     auto widget = new QWidget(parent);
     widget->setContentsMargins(0, 0, 0, 0);
     auto hlyout = new QHBoxLayout;
-    auto lbl = new QLabel(caption, widget);
+    auto lbl = new ELabel(caption, widget);
     hlyout->addWidget(lbl, 0);
-    lbl = new QLabel("", widget);
+    lbl = new ELabel("", widget);
     lbl->setObjectName(lblname);
     lbl->setEnabled(enabled);
     lbl->setStyleSheet(valuesFormat);
@@ -24,10 +26,10 @@ QWidget *LBLFunc::NewLBL(QWidget *parent, QString lblname, QString caption, bool
     return widget;
 }
 
-QLabel *LBLFunc::New(
+ELabel *LBLFunc::New(
     QWidget *parent, const QString &text, const QString &lblname, const QPixmap *pm, const QString &lbltip)
 {
-    auto lbl = new QLabel(parent);
+    auto lbl = new ELabel(parent);
     lbl->setStyleSheet("QLabel {border: none;}");
     lbl->setWordWrap(true);
     lbl->setText(text);
@@ -39,10 +41,9 @@ QLabel *LBLFunc::New(
     return lbl;
 }
 
-QLabel *LBLFunc::NewT(
-    QWidget *parent, const QString &text, const QString &lblname, const QString &lbltip, bool fixed)
+ELabel *LBLFunc::newT(QWidget *parent, const QString &text, const QString &lblname, const QString &lbltip, bool fixed)
 {
-    auto lbl = new QLabel(parent);
+    auto lbl = new ELabel(parent);
     lbl->setText(text);
     lbl->setObjectName(lblname);
     lbl->setToolTip(lbltip);
@@ -52,7 +53,7 @@ QLabel *LBLFunc::NewT(
     return lbl;
 }
 
-bool LBLFunc::SetTColor(QWidget *parent, const QString &lblname, const QString &color)
+bool LBLFunc::setBGColor(QWidget *parent, const QString &lblname, const QString &color)
 {
 
     auto style = "QLabel {border: 1px solid green; border-radius: 4px; "
@@ -60,7 +61,7 @@ bool LBLFunc::SetTColor(QWidget *parent, const QString &lblname, const QString &
                  "background-color: "
         + QString(color) + "; font: bold 10px;}";
 
-    auto lblt = parent->findChild<QLabel *>(lblname);
+    auto lblt = parent->findChild<ELabel *>(lblname);
     if (lblt == nullptr)
         return false;
 
@@ -69,9 +70,9 @@ bool LBLFunc::SetTColor(QWidget *parent, const QString &lblname, const QString &
     return true;
 }
 
-bool LBLFunc::SetImage(QWidget *parent, const QString &lblname, QPixmap *pm)
+bool LBLFunc::setImage(QWidget *parent, const QString &lblname, QPixmap *pm)
 {
-    auto lbl = parent->findChild<QLabel *>(lblname);
+    auto lbl = parent->findChild<ELabel *>(lblname);
     Q_ASSERT(lbl != nullptr);
     if (lbl == nullptr)
     {
@@ -85,9 +86,9 @@ bool LBLFunc::SetImage(QWidget *parent, const QString &lblname, QPixmap *pm)
     }
 }
 
-bool LBLFunc::SetColor(QWidget *parent, const QString &lblname, const QString &lblcolor)
+bool LBLFunc::setColor(QWidget *parent, const QString &lblname, const QString &lblcolor)
 {
-    auto lbl = parent->findChild<QLabel *>(lblname);
+    auto lbl = parent->findChild<ELabel *>(lblname);
     if (lbl == nullptr)
         return false;
     // http://forum.sources.ru/index.php?showtopic=313950
@@ -97,9 +98,9 @@ bool LBLFunc::SetColor(QWidget *parent, const QString &lblname, const QString &l
     return true;
 }
 
-bool LBLFunc::SetText(QWidget *parent, const QString &lblname, const QString &lbltext, bool enabled)
+bool LBLFunc::setText(QWidget *parent, const QString &lblname, const QString &lbltext, bool enabled)
 {
-    auto lbl = parent->findChild<QLabel *>(lblname);
+    auto lbl = parent->findChild<ELabel *>(lblname);
     if (lbl == nullptr)
         return false;
     if (!lbltext.isEmpty()) // if label text is empty save previous text in QLabel
@@ -108,11 +109,29 @@ bool LBLFunc::SetText(QWidget *parent, const QString &lblname, const QString &lb
     return true;
 }
 
-QString LBLFunc::Text(QWidget *parent, const QString &lblname)
+QString LBLFunc::text(QWidget *parent, const QString &lblname)
 {
-    auto lbl = parent->findChild<QLabel *>(lblname);
+    auto lbl = parent->findChild<ELabel *>(lblname);
     if (lbl == nullptr)
         return QString();
     auto text = lbl->text();
     return text;
+}
+
+QString LBLFunc::data(QWidget *parent, const QString &lblname)
+{
+    auto lbl = parent->findChild<ELabel *>(lblname);
+    if (lbl == nullptr)
+        return QString();
+    auto data = lbl->data<QString>();
+    return data;
+}
+
+bool LBLFunc::setData(QWidget *parent, const QString &lblname, const QString &data)
+{
+    auto lbl = parent->findChild<ELabel *>(lblname);
+    if (lbl == nullptr)
+        return false;
+    lbl->setData(data);
+    return true;
 }

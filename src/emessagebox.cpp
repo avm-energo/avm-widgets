@@ -1,6 +1,6 @@
-#include <widgets/emessagebox.h>
-#include <widgets/epasswordpopup.h>
-#include <widgets/lblfunc.h>
+#include <avm-widgets/emessagebox.h>
+#include <avm-widgets/epasswordpopup.h>
+#include <avm-widgets/lblfunc.h>
 
 bool EMessageBox::m_result = false;
 QByteArray EMessageBox::m_hash = "d93fdd6d1fb5afcca939fa650b62541d09dbcb766f41c39352dc75f348fb35dc";

@@ -1,7 +1,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
+#include <avm-widgets/chbfunc.h>
 #include <gen/error.h>
-#include <widgets/chbfunc.h>
 
 QCheckBox *ChBFunc::New(QWidget *parent, const QString &chbname, const QString &chbtext)
 {
@@ -11,7 +11,7 @@ QCheckBox *ChBFunc::New(QWidget *parent, const QString &chbname, const QString &
     return chb;
 }
 
-QWidget *ChBFunc::NewLBL(QWidget *parent, const QString &caption, const QString &chbname, const QString &chbtext)
+QWidget *ChBFunc::newLBL(QWidget *parent, const QString &caption, const QString &chbname, const QString &chbtext)
 {
     QWidget *w = new QWidget(parent);
     w->setContentsMargins(0, 0, 0, 0);
@@ -24,7 +24,7 @@ QWidget *ChBFunc::NewLBL(QWidget *parent, const QString &caption, const QString 
     return w;
 }
 
-bool ChBFunc::Data(const QWidget *parent, const QString &chbname, bool &data)
+bool ChBFunc::data(const QWidget *parent, const QString &chbname, bool &data)
 {
     auto chb = parent->findChild<QCheckBox *>(chbname);
     if (chb == nullptr)
@@ -33,7 +33,7 @@ bool ChBFunc::Data(const QWidget *parent, const QString &chbname, bool &data)
     return true;
 }
 
-bool ChBFunc::Data(const QWidget *parent, const QString &chbname)
+bool ChBFunc::data(const QWidget *parent, const QString &chbname)
 {
     auto chb = parent->findChild<QCheckBox *>(chbname);
     if (chb == nullptr)
@@ -44,7 +44,7 @@ bool ChBFunc::Data(const QWidget *parent, const QString &chbname)
     return chb->isChecked();
 }
 
-bool ChBFunc::SetData(QWidget *parent, const QString &chbname, bool data)
+bool ChBFunc::setData(QWidget *parent, const QString &chbname, bool data)
 {
     auto chb = parent->findChild<QCheckBox *>(chbname);
     if (chb == nullptr)

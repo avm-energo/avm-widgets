@@ -1,15 +1,15 @@
 #include <QFileDialog>
 #include <QHBoxLayout>
+#include <avm-widgets/filefunc.h>
+#include <avm-widgets/lblfunc.h>
+#include <avm-widgets/lefunc.h>
+#include <avm-widgets/pbfunc.h>
 #include <gen/settings.h>
-#include <widgets/filefunc.h>
-#include <widgets/lblfunc.h>
-#include <widgets/lefunc.h>
-#include <widgets/pbfunc.h>
 FileFunc::FileFunc()
 {
 }
 
-QString FileFunc::ChooseFileForOpen(QWidget *parent, QString mask)
+QString FileFunc::chooseFileForOpen(QWidget *parent, QString mask)
 {
     auto workPath = Settings::workDir();
     auto dlg = new QFileDialog(parent);
@@ -21,7 +21,7 @@ QString FileFunc::ChooseFileForOpen(QWidget *parent, QString mask)
     return filename;
 }
 
-QString FileFunc::ChooseFileForSave(QWidget *parent, const QString &mask, const QString &ext, const QString &filename)
+QString FileFunc::chooseFileForSave(QWidget *parent, const QString &mask, const QString &ext, const QString &filename)
 {
     auto workPath = Settings::workDir();
     auto dlg = new QFileDialog(parent);
@@ -35,7 +35,7 @@ QString FileFunc::ChooseFileForSave(QWidget *parent, const QString &mask, const 
     return filepath;
 }
 
-QString FileFunc::ChooseDirectoryForOpen(QWidget *parent)
+QString FileFunc::chooseDirectoryForOpen(QWidget *parent)
 {
     auto workPath = Settings::workDir();
     auto dlg = new QFileDialog(parent);
@@ -54,19 +54,19 @@ QWidget *FileFunc::New(
 {
     QWidget *w = new QWidget;
     QHBoxLayout *hlyout = new QHBoxLayout;
-    hlyout->addWidget(LEFunc::NewLBL(parent, (type == WidgetTypes::FILE) ? "Файл: " : "Каталог: ", wname));
+    hlyout->addWidget(LEFunc::newLBL(parent, (type == WidgetTypes::FILE) ? "Файл: " : "Каталог: ", wname));
     hlyout->addWidget(PBFunc::New(parent, "", "...", [=] {
         if (type == WidgetTypes::FILE)
-            LEFunc::SetData(parent, wname, ChooseFileForOpen(parent, mask));
+            LEFunc::setData(parent, wname, chooseFileForOpen(parent, mask));
         else
-            LEFunc::SetData(parent, wname, ChooseDirectoryForOpen(parent));
+            LEFunc::setData(parent, wname, chooseDirectoryForOpen(parent));
     }));
-    LEFunc::SetData(parent, wname, path);
+    LEFunc::setData(parent, wname, path);
     w->setLayout(hlyout);
     return w;
 }
 
-QWidget *FileFunc::NewLBL(QWidget *parent, const QString &lbltext, const QString &wname, WidgetTypes type,
+QWidget *FileFunc::newLBL(QWidget *parent, const QString &lbltext, const QString &wname, WidgetTypes type,
     const QString &mask, const QString &path)
 {
     QWidget *w = new QWidget;

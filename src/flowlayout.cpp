@@ -48,9 +48,8 @@
 **
 ****************************************************************************/
 
-#include "widgets/flowlayout.h"
-
 #include <QtWidgets>
+#include <avm-widgets/flowlayout.h>
 
 QSize FlowLayout::minimumSize() const
 {

@@ -1,11 +1,10 @@
-#include "widgets/styleloader.h"
-
 #include <QApplication>
 #include <QDebug>
 #include <QFile>
 #include <QKeyEvent>
 #include <QMetaEnum>
 #include <QSettings>
+#include <avm-widgets/styleloader.h>
 
 QMap<QString, QString> StyleLoader::s_themes {
     { "Light", defaultStyleFile },        //

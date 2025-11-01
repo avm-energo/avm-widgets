@@ -1,6 +1,6 @@
 #include <QLabel>
 #include <QRegularExpressionValidator>
-#include <widgets/lefunc.h>
+#include <avm-widgets/lefunc.h>
 
 QLineEdit *LEFunc::New(QWidget *parent, const QString &lename, const QString &letext, const QString &tooltip)
 {
@@ -11,13 +11,13 @@ QLineEdit *LEFunc::New(QWidget *parent, const QString &lename, const QString &le
     return le;
 }
 
-PasswordLineEdit *LEFunc::NewPsw(QWidget *parent, const QString &lename, QLineEdit::EchoMode echostyle)
+PasswordLineEdit *LEFunc::newPsw(QWidget *parent, const QString &lename, QLineEdit::EchoMode echostyle)
 {
     auto le = new PasswordLineEdit(parent, lename, echostyle);
     return le;
 }
 
-QString LEFunc::Data(QObject *parent, const QString &lename)
+QString LEFunc::data(QObject *parent, const QString &lename)
 {
     auto le = parent->findChild<QLineEdit *>(lename);
     if (le == nullptr)
@@ -25,7 +25,7 @@ QString LEFunc::Data(QObject *parent, const QString &lename)
     return le->text();
 }
 
-bool LEFunc::SetData(QObject *parent, const QString &lename, const QString &levalue, const QString &restring)
+bool LEFunc::setData(QObject *parent, const QString &lename, const QString &levalue, const QString &restring)
 {
     auto le = parent->findChild<QLineEdit *>(lename);
     if (le == nullptr)
@@ -39,7 +39,7 @@ bool LEFunc::SetData(QObject *parent, const QString &lename, const QString &leva
     return true;
 }
 
-bool LEFunc::SetColor(QWidget *parent, const QString &lename, const QColor &color)
+bool LEFunc::setColor(QWidget *parent, const QString &lename, const QColor &color)
 {
     auto le = parent->findChild<QLineEdit *>(lename);
     if (le == nullptr)
@@ -51,7 +51,7 @@ bool LEFunc::SetColor(QWidget *parent, const QString &lename, const QColor &colo
     return true;
 }
 
-QWidget *LEFunc::NewLBL(QWidget *parent, QString caption, QString lename, bool enabled)
+QWidget *LEFunc::newLBL(QWidget *parent, QString caption, QString lename, bool enabled)
 {
     auto widget = new QWidget(parent);
     widget->setContentsMargins(0, 0, 0, 0);
@@ -66,14 +66,14 @@ QWidget *LEFunc::NewLBL(QWidget *parent, QString caption, QString lename, bool e
     return widget;
 }
 
-QWidget *LEFunc::NewPswLBL(QWidget *parent, QString caption, QString lename)
+QWidget *LEFunc::newPswLBL(QWidget *parent, QString caption, QString lename)
 {
     auto widget = new QWidget(parent);
     widget->setContentsMargins(0, 0, 0, 0);
     auto hlyout = new QHBoxLayout;
     auto lbl = new QLabel(caption, widget);
     hlyout->addWidget(lbl, 0);
-    auto le = NewPsw(parent, lename);
+    auto le = newPsw(parent, lename);
     hlyout->addWidget(le, 10);
     widget->setLayout(hlyout);
     return widget;

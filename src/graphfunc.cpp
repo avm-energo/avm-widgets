@@ -1,10 +1,11 @@
-#include <widgets/graphfunc.h>
-
 #include <QPainter>
+#include <avm-widgets/graphfunc.h>
 
-GraphFunc::GraphFunc() { }
+GraphFunc::GraphFunc()
+{
+}
 
-QLabel *GraphFunc::NewIcon(QWidget *parent, const QString &iconpath)
+QLabel *GraphFunc::newIcon(QWidget *parent, const QString &iconpath)
 {
     auto label = new QLabel(parent);
     label->setStyleSheet("QLabel {border: none;}");
@@ -13,7 +14,7 @@ QLabel *GraphFunc::NewIcon(QWidget *parent, const QString &iconpath)
     return label;
 }
 
-QPixmap GraphFunc::NewCircle(QColor color, int radius)
+QPixmap GraphFunc::newCircle(QColor color, int radius)
 {
     QPixmap myPix(QSize(radius, radius));
     myPix.fill(Qt::transparent);
@@ -30,7 +31,7 @@ QPixmap GraphFunc::NewCircle(QColor color, int radius)
     return myPix;
 }
 
-QPixmap GraphFunc::NewLedIndicator(QColor color, float height)
+QPixmap GraphFunc::newLedIndicator(QColor color, float height)
 {
     QColor lightColor(QColor(0xE0, 0xE0, 0xE0));
     QColor shadowColor(QColor(0x70, 0x70, 0x70));

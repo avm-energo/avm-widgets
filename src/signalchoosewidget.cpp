@@ -1,8 +1,6 @@
-#include "widgets/signalchoosewidget.h"
-
-#include <widgets/chbfunc.h>
-
 #include <QVBoxLayout>
+#include <avm-widgets/chbfunc.h>
+#include <avm-widgets/signalchoosewidget.h>
 
 SignalChooseWidget::SignalChooseWidget(const QStringList &snames, const QStringList &discr, QWidget *parent)
     : QScrollArea(parent)
@@ -30,7 +28,7 @@ SignalChooseWidget::SignalChooseWidget(const QStringList &snames, const QStringL
 
 void SignalChooseWidget::setChecked(QString signame, bool checked)
 {
-    ChBFunc::SetData(this, signame, checked);
+    ChBFunc::setData(this, signame, checked);
 }
 
 MarkSignalWidget::MarkSignalWidget(const QString &text, QWidget *parent) : QLabel(parent)

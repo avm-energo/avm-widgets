@@ -1,4 +1,4 @@
-#include "widgets/ecombobox.h"
+#include <avm-widgets/ecombobox.h>
 
 EComboBox::EComboBox(QWidget *parent) : QComboBox(parent)
 {

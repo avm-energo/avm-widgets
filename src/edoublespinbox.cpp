@@ -1,6 +1,5 @@
-#include "widgets/edoublespinbox.h"
-
 #include <QWheelEvent>
+#include <avm-widgets/edoublespinbox.h>
 
 EDoubleSpinBox::EDoubleSpinBox(QWidget *parent) : QDoubleSpinBox(parent)
 {

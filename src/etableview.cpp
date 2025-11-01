@@ -1,8 +1,7 @@
-#include "widgets/etableview.h"
-
 #include <QApplication>
 #include <QDialog>
 #include <QHeaderView>
+#include <avm-widgets/etableview.h>
 
 ETableView::ETableView(QWidget *parent) : QTableView(parent)
 {

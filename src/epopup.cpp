@@ -1,12 +1,12 @@
 #include <QKeyEvent>
 #include <QVBoxLayout>
-#include <widgets/epopup.h>
-#include <widgets/graphfunc.h>
-#include <widgets/lblfunc.h>
-#include <widgets/lefunc.h>
-#include <widgets/passwordlineedit.h>
-#include <widgets/pbfunc.h>
-#include <widgets/styleloader.h>
+#include <avm-widgets/epopup.h>
+#include <avm-widgets/graphfunc.h>
+#include <avm-widgets/lblfunc.h>
+#include <avm-widgets/lefunc.h>
+#include <avm-widgets/passwordlineedit.h>
+#include <avm-widgets/pbfunc.h>
+#include <avm-widgets/styleloader.h>
 
 EPopup::EPopup(QWidget *parent) : QDialog(parent)
 {
@@ -17,7 +17,7 @@ EPopup::EPopup(MessageTypes type, const QString &msg, QWidget *parent)
     setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
     setWindowModality(Qt::WindowModal);
     setStyleSheet("QFrame {border-radius: 10px; border: 3px solid gray;}");
-    Create(type, LBLFunc::New(parent, msg), parent);
+    create(type, LBLFunc::New(parent, msg), parent);
 }
 
 EPopup::EPopup(MessageTypes type, QWidget *w, QWidget *parent)
@@ -25,10 +25,10 @@ EPopup::EPopup(MessageTypes type, QWidget *w, QWidget *parent)
     setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
     setWindowModality(Qt::WindowModal);
     setStyleSheet("QFrame {border-radius: 10px; border: 3px solid gray;}");
-    Create(type, w, parent);
+    create(type, w, parent);
 }
 
-void EPopup::Create(MessageTypes &type, QWidget *w, QWidget *parent)
+void EPopup::create(MessageTypes &type, QWidget *w, QWidget *parent)
 {
     struct msgsStruct
     {
@@ -55,7 +55,7 @@ void EPopup::Create(MessageTypes &type, QWidget *w, QWidget *parent)
     QVBoxLayout *lyout = new QVBoxLayout;
     QHBoxLayout *hlyout = new QHBoxLayout;
 
-    auto icon = GraphFunc::NewIcon(parent, map[type].pxFile);
+    auto icon = GraphFunc::newIcon(parent, map[type].pxFile);
     icon->setStyleSheet("QWidget " + backgroundColor);
     hlyout->addWidget(icon);
     hlyout->addWidget(w);

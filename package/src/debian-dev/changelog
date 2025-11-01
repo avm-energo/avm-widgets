@@ -1,3 +1,12 @@
+libavm-widgets-dev (2.3.0) unstable; urgency=low
+
+  [+] ELabel class added to let the Label consist some useful information
+  [*] methods renamed to proper case
+  [*] moved from widgets to avm-widgets namespace
+  [*] some big-weight movies removed, some modifications into waitWidget added
+
+ -- AVM-Energo <support@avmenergo.ru> Sat, 01 Nov 2025 11:26:43 +0300
+
 libavm-widgets-dev (2.2.5) unstable; urgency=low
 
   [+] progressbar PrBFunc added

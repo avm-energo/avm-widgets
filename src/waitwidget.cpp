@@ -1,22 +1,29 @@
-#include "widgets/waitwidget.h"
-
 #include <QApplication>
 #include <QFontMetrics>
 #include <QLabel>
 #include <QPainter>
-#include <QRandomGenerator>
 #include <QTimer>
+#include <QVBoxLayout>
+#include <avm-widgets/waitwidget.h>
 
-WaitWidget::WaitWidget(QWidget *parent) : QWidget(parent)
+WaitWidget::WaitWidget(const QString &movie, QWidget *parent) : QWidget(parent)
 {
     //    setAttribute(Qt::WA_TranslucentBackground);
+    setFixedSize(QSize(320, 240));
+
     setStyleSheet("QWidget {background: rgb(0, 186, 144);}");
     setAttribute(Qt::WA_DeleteOnClose);
-    QRandomGenerator random;
-    quint8 gifNumber = random.bounded(movies.size());
-    QLabel *lbl = new QLabel;
-    m_movie = new QMovie(movies.at(gifNumber));
-    lbl->setMovie(m_movie);
+    QVBoxLayout *lyout = new QVBoxLayout;
+    QLabel *lbl = new QLabel(parent);
+    if (movie.isEmpty())
+        m_movie = new QMovie("images/walkontwocat.gif");
+    else
+        m_movie = new QMovie(movie);
+    if (m_movie->isValid())
+        lbl->setMovie(m_movie);
+    lyout->addWidget(lbl);
+    setLayout(lyout);
+    hide();
     Message = "";
     resize(320, 380);
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
@@ -30,7 +37,7 @@ WaitWidget::~WaitWidget()
 {
 }
 
-void WaitWidget::Init(WaitWidget::ww_struct &ww)
+void WaitWidget::init(WaitWidget::ww_struct &ww)
 {
     this->IsAllowedToStop = ww.isallowedtostop;
     this->IsIncrement = ww.isincrement;
@@ -41,34 +48,34 @@ void WaitWidget::Init(WaitWidget::ww_struct &ww)
     PressAnyKeyStringWidth = fm.horizontalAdvance(PressAnyKeyString); //+10;
 }
 
-void WaitWidget::Start()
+void WaitWidget::start()
 {
     show();
     m_movie->start();
     QTimer *tmrs = new QTimer(this);
     tmrs->setInterval(1000);
-    connect(tmrs, &QTimer::timeout, this, &WaitWidget::UpdateSeconds);
+    connect(tmrs, &QTimer::timeout, this, &WaitWidget::updateSeconds);
     tmrs->start();
 }
 
-void WaitWidget::Stop()
+void WaitWidget::stop()
 {
     emit finished();
     m_movie->stop();
     close();
 }
 
-void WaitWidget::SetMessage(QString msg)
+void WaitWidget::setMessage(QString msg)
 {
     Message = msg;
 }
 
-void WaitWidget::SetSeconds(quint32 seconds)
+void WaitWidget::setSeconds(quint32 seconds)
 {
     Seconds = seconds;
 }
 
-void WaitWidget::UpdateSeconds()
+void WaitWidget::updateSeconds()
 {
     if (IsIncrement)
         ++Seconds;
@@ -77,14 +84,15 @@ void WaitWidget::UpdateSeconds()
         --Seconds;
         if (Seconds == 0)
         {
-            emit CountZero();
-            Stop();
+            emit countZero();
+            stop();
         }
     }
 }
 
 void WaitWidget::paintEvent(QPaintEvent *e)
 {
+    // draw text in bottom
     QSize size = QSize(320, 240);
     QSize wsize = QSize(310, 380);
     int left = wsize.width() / 2 - size.width() / 2;
@@ -123,14 +131,14 @@ void WaitWidget::keyPressEvent(QKeyEvent *e)
 {
     if ((e->key() == Qt::Key_Escape) && IsAllowedToStop)
     {
-        Stop();
-        emit CountZero();
+        stop();
+        emit countZero();
     }
     QWidget::keyPressEvent(e);
 }
 
 void WaitWidget::closeEvent(QCloseEvent *e)
 {
-    emit CountZero();
+    emit countZero();
     e->accept();
 }

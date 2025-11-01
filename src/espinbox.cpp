@@ -1,4 +1,4 @@
-#include <widgets/espinbox.h>
+#include <avm-widgets/espinbox.h>
 
 ESpinBox::ESpinBox(QWidget *parent) : QSpinBox(parent)
 {

@@ -2,7 +2,7 @@
 #include <QPainter>
 #include <QSvgRenderer>
 #include <gen/xml/xmlattr.h>
-#include <widgets/hexpbfunc.h>
+#include <avm-widgets/hexpbfunc.h>
 
 void HexPBFunc::setProcessed(QWidget *parent, const QString &name)
 {

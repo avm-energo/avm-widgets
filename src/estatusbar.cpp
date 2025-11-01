@@ -1,4 +1,4 @@
-#include <widgets/estatusbar.h>
+#include <avm-widgets/estatusbar.h>
 
 #include <QHBoxLayout>
 #include <QLabel>

@@ -1,5 +1,5 @@
-#include <widgets/etabwidget.h>
-#include <widgets/etabbar.h>
+#include <avm-widgets/etabwidget.h>
+#include <avm-widgets/etabbar.h>
 
 ETabWidget::ETabWidget(bool editable, const QString &widgetName, QWidget *parent) : QTabWidget(parent)
 {

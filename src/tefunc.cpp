@@ -1,6 +1,6 @@
-#include <widgets/tefunc.h>
+#include <avm-widgets/tefunc.h>
 
-bool TEFunc::SetData(QWidget *parent, const QString &tename, const QString &tetext)
+bool TEFunc::setData(QWidget *parent, const QString &tename, const QString &tetext)
 {
     auto te = parent->findChild<QTextEdit *>(tename);
     if (te == nullptr)
@@ -16,7 +16,7 @@ QTextEdit *TEFunc::New(QWidget *parent, const QString &tename)
     return te;
 }
 
-bool TEFunc::AppendData(QWidget *parent, const QString &tename, const QString &tetext)
+bool TEFunc::appendData(QWidget *parent, const QString &tename, const QString &tetext)
 {
     auto te = parent->findChild<QTextEdit *>(tename);
     if (te == nullptr)
@@ -25,7 +25,7 @@ bool TEFunc::AppendData(QWidget *parent, const QString &tename, const QString &t
     return true;
 }
 
-bool TEFunc::Data(QWidget *parent, const QString &tename, QString &tevalue)
+bool TEFunc::data(QWidget *parent, const QString &tename, QString &tevalue)
 {
     auto te = parent->findChild<QTextEdit *>(tename);
     if (te == nullptr)

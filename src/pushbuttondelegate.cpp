@@ -1,8 +1,7 @@
-#include "widgets/pushbuttondelegate.h"
-
 #include <QAbstractTableModel>
 #include <QApplication>
 #include <QMouseEvent>
+#include <avm-widgets/pushbuttondelegate.h>
 
 PushButtonDelegate::PushButtonDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {

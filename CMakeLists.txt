@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 
 project(avm-widgets LANGUAGES CXX
   DESCRIPTION "Widgets library for AVM-Energo C++ projects"
-  VERSION 2.2.5)
+  VERSION 2.3.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -47,11 +47,12 @@ find_package(Qt${QT_VERSION_MAJOR}
 include(gen)
 
 # Collecting sources
-set(WIDGETS_INCLUDE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/include/widgets")
+set(WIDGETS_INCLUDE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/include")
 set(WIDGETS_SRC_PATH     "${CMAKE_CURRENT_SOURCE_DIR}/src")
 file(GLOB_RECURSE files_h   ${WIDGETS_INCLUDE_PATH}/*.h)
 file(GLOB_RECURSE files_cpp ${WIDGETS_SRC_PATH}/*.cpp)
 file(GLOB_RECURSE files_qrc ${CMAKE_CURRENT_SOURCE_DIR}/*.qrc)
+file(GLOB_RECURSE public_headers ${WIDGETS_INCLUDE_PATH}/${PROJECT_NAME}/*.h)
 
 # Library building settings
 if(BUILD_SHARED_LIBS)
@@ -71,8 +72,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${avm-gen_SOURCE_DIR}/include
 add_library(avm-energo::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 # Set project version as avm-widgets target property
-set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
-set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${public_headers}")
+set_target_properties(${PROJECT_NAME} PROPERTIES
+  VERSION ${PROJECT_VERSION}
+  SOVERSION ${PROJECT_VERSION_MAJOR}
+  PUBLIC_HEADER "${public_headers}")
 
 target_link_libraries(
     ${PROJECT_NAME} PUBLIC
@@ -95,13 +98,6 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
 
 # --- Install libs and binaries ---
-install(TARGETS ${PROJECT_NAME}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-
 install(TARGETS ${PROJECT_NAME}
         EXPORT ${PROJECT_NAME}_Targets
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}

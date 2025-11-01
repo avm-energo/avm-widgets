@@ -1,7 +1,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <gen/error.h>
-#include <widgets/spbfunc.h>
+#include <avm-widgets/spbfunc.h>
 
 SPBFunc::SPBFunc()
 {
@@ -20,7 +20,7 @@ EDoubleSpinBox *SPBFunc::New(
     return dsb;
 }
 
-QWidget *SPBFunc::NewLBL(QWidget *parent, const QString &caption, const QString &spbname, const double min,
+QWidget *SPBFunc::newLBL(QWidget *parent, const QString &caption, const QString &spbname, const double min,
     const double max, const int decimals)
 {
     auto widget = new QWidget(parent);
@@ -34,7 +34,7 @@ QWidget *SPBFunc::NewLBL(QWidget *parent, const QString &caption, const QString 
     return widget;
 }
 
-DoubleSpinBoxGroup *SPBFunc::NewGroup(
+DoubleSpinBoxGroup *SPBFunc::newGroup(
     QWidget *parent, const QString &spbname, int count, const double min, const double max, const int decimals)
 {
     auto spinBoxGroup = new DoubleSpinBoxGroup(count, parent);
@@ -47,7 +47,7 @@ DoubleSpinBoxGroup *SPBFunc::NewGroup(
     return spinBoxGroup;
 }
 
-DoubleSpinBoxGroup *SPBFunc::NewGroup(QWidget *parent, const QString &spbname, const QStringList &list,
+DoubleSpinBoxGroup *SPBFunc::newGroup(QWidget *parent, const QString &spbname, const QStringList &list,
     const double min, const double max, const int decimals)
 {
     auto spinBoxGroup = new DoubleSpinBoxGroup(list, parent);
@@ -60,7 +60,7 @@ DoubleSpinBoxGroup *SPBFunc::NewGroup(QWidget *parent, const QString &spbname, c
     return spinBoxGroup;
 }
 
-bool SPBFunc::SetData(const QObject *parent, const QString &spbname, const double &spbvalue)
+bool SPBFunc::setData(const QObject *parent, const QString &spbname, const double &spbvalue)
 {
     auto spb = parent->findChild<EDoubleSpinBox *>(spbname);
     if (spb == nullptr)

@@ -1,6 +1,6 @@
 #include <QLabel>
 #include <QLayout>
-#include <widgets/prbfunc.h>
+#include <avm-widgets/prbfunc.h>
 
 QProgressBar *PrbFunc::New(QWidget *parent, const QString &prbname)
 {
@@ -9,7 +9,7 @@ QProgressBar *PrbFunc::New(QWidget *parent, const QString &prbname)
     return prb;
 }
 
-QWidget *PrbFunc::NewLBL(QWidget *parent, const QString &caption, const QString &prbname, const QString &format)
+QWidget *PrbFunc::newLBL(QWidget *parent, const QString &caption, const QString &prbname, const QString &format)
 {
     auto widget = new QWidget(parent);
     widget->setContentsMargins(0, 0, 0, 0);

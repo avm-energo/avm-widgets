@@ -1,12 +1,12 @@
 #include <QCryptographicHash>
 #include <QHBoxLayout>
 #include <QKeyEvent>
-#include <widgets/emessagebox.h>
-#include <widgets/epasswordpopup.h>
-#include <widgets/graphfunc.h>
-#include <widgets/lblfunc.h>
-#include <widgets/lefunc.h>
-#include <widgets/styleloader.h>
+#include <avm-widgets/emessagebox.h>
+#include <avm-widgets/epasswordpopup.h>
+#include <avm-widgets/graphfunc.h>
+#include <avm-widgets/lblfunc.h>
+#include <avm-widgets/lefunc.h>
+#include <avm-widgets/styleloader.h>
 
 EPasswordPopup::EPasswordPopup(const QString &hash, QWidget *parent) : EPopup(parent)
 {
@@ -16,7 +16,7 @@ EPasswordPopup::EPasswordPopup(const QString &hash, QWidget *parent) : EPopup(pa
     isAboutToClose = false;
     m_hash = hash;
     QHBoxLayout *hlyout = new QHBoxLayout;
-    auto icon = GraphFunc::NewIcon(parent, ":/icons/psw-hex.svg");
+    auto icon = GraphFunc::newIcon(parent, ":/icons/psw-hex.svg");
     icon->setStyleSheet(widgetStyle);
     hlyout->addWidget(icon);
     auto text = LBLFunc::New(this, "Введите пароль\nПодтверждение: клавиша Enter\nОтмена: клавиша Esc", "pswlbl");
@@ -24,7 +24,7 @@ EPasswordPopup::EPasswordPopup(const QString &hash, QWidget *parent) : EPopup(pa
     hlyout->addWidget(text);
     QVBoxLayout *vlyout = new QVBoxLayout;
     vlyout->addLayout(hlyout);
-    vlyout->addWidget(LEFunc::NewPsw(this, "pswle", QLineEdit::Password));
+    vlyout->addWidget(LEFunc::newPsw(this, "pswle", QLineEdit::Password));
     setLayout(vlyout);
     adjustSize();
     setStyleSheet(dialogStyle);
@@ -48,7 +48,7 @@ void EPasswordPopup::keyPressEvent(QKeyEvent *e)
 
     if ((e->key() == Qt::Key_Enter) || (e->key() == Qt::Key_Return))
     {
-        if (checkPassword(LEFunc::Data(this, "pswle")))
+        if (checkPassword(LEFunc::data(this, "pswle")))
         {
             emit passwordIsCorrect();
             aboutToClose();

@@ -22,10 +22,9 @@
  * SOFTWARE.
  */
 
-#include "widgets/eprogressindicator.h"
-
 #include <QPainter>
 #include <QTimer>
+#include <avm-widgets/eprogressindicator.h>
 
 EProgressIndicator::EProgressIndicator(QWidget *parent)
     : QWidget(parent)

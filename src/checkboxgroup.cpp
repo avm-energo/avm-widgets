@@ -1,8 +1,7 @@
-#include "widgets/checkboxgroup.h"
-
 #include <QDebug>
 #include <QVBoxLayout>
-#include <widgets/flowlayout.h>
+#include <avm-widgets/checkboxgroup.h>
+#include <avm-widgets/flowlayout.h>
 
 CheckBoxGroup::CheckBoxGroup(const QStringList &desc, const QList<int> &ignorePos, QWidget *parent) : QWidget(parent)
 {

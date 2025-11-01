@@ -1,10 +1,10 @@
 #include <QKeyEvent>
 #include <QVBoxLayout>
-#include <widgets/eeditablepopup.h>
-#include <widgets/emessagebox.h>
-#include <widgets/lblfunc.h>
-#include <widgets/lefunc.h>
-#include <widgets/pbfunc.h>
+#include <avm-widgets/eeditablepopup.h>
+#include <avm-widgets/emessagebox.h>
+#include <avm-widgets/lblfunc.h>
+#include <avm-widgets/lefunc.h>
+#include <avm-widgets/pbfunc.h>
 
 EEditablePopup::EEditablePopup(const QString &caption, QWidget *parent) : EPopup(parent)
 {
@@ -26,7 +26,7 @@ void EEditablePopup::execPopup()
     auto layout = new QVBoxLayout;
     layout->addWidget(LBLFunc::New(this, caption));
     for (std::map<QString, float *>::iterator it = m_floatParList.begin(); it != m_floatParList.end(); ++it)
-        layout->addWidget(LEFunc::NewLBL(this, it->first, it->first, true));
+        layout->addWidget(LEFunc::newLBL(this, it->first, it->first, true));
     auto hlyout = new QHBoxLayout;
     hlyout->addStretch(100);
     hlyout->addWidget(PBFunc::New(this, "", "Далее", this, &EEditablePopup::acceptSlot));
@@ -48,7 +48,7 @@ void EEditablePopup::acceptSlot()
     {
         bool isOk = false;
         float fl;
-        fl = LEFunc::Data(this, it->first).toFloat(&isOk);
+        fl = LEFunc::data(this, it->first).toFloat(&isOk);
         float *tmpf = it->second;
         if (isOk)
             *tmpf = fl;

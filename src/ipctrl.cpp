@@ -1,5 +1,3 @@
-#include "widgets/ipctrl.h"
-
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QIntValidator>
@@ -7,6 +5,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QRegularExpressionValidator>
+#include <avm-widgets/ipctrl.h>
 
 IPCtrl::IPCtrl(QWidget *parent) : QFrame(parent)
 {
@@ -213,7 +212,7 @@ void IPCtrl::movePrevLineEdit(int i)
     }
 }
 
-bool IPCtrl::SetData(const QObject *parent, const QString &name, const NetIP &value)
+bool IPCtrl::setData(const QObject *parent, const QString &name, const NetIP &value)
 {
     auto ipControl = parent->findChild<IPCtrl *>(name);
     if (ipControl == nullptr)
@@ -222,7 +221,7 @@ bool IPCtrl::SetData(const QObject *parent, const QString &name, const NetIP &va
     return true;
 }
 
-NetIP IPCtrl::Data(const QObject *parent, const QString &name)
+NetIP IPCtrl::data(const QObject *parent, const QString &name)
 {
     auto ipControl = parent->findChild<IPCtrl *>(name);
     if (ipControl == nullptr)

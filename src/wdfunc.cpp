@@ -2,8 +2,8 @@
 #include <QMainWindow>
 #include <gen/pch.h>
 #include <gen/stdfunc.h>
-#include <widgets/emessagebox.h>
-#include <widgets/wdfunc.h>
+#include <avm-widgets/emessagebox.h>
+#include <avm-widgets/wdfunc.h>
 
 QMainWindow *WDFunc::getMainWindow()
 {
@@ -17,14 +17,14 @@ QMainWindow *WDFunc::getMainWindow()
     return nullptr;
 }
 
-void WDFunc::SetEnabled(QWidget *parent, const QString &wname, bool enabled)
+void WDFunc::setEnabled(QWidget *parent, const QString &wname, bool enabled)
 {
     auto widget = parent->findChild<QWidget *>(wname);
     if (widget != nullptr)
         widget->setEnabled(enabled);
 }
 
-void WDFunc::SetVisible(QWidget *parent, const QString &wname, bool visible)
+void WDFunc::setVisible(QWidget *parent, const QString &wname, bool visible)
 {
     auto widget = parent->findChild<QWidget *>(wname);
     if (widget != nullptr)
@@ -53,7 +53,7 @@ bool WDFunc::floatIsWithinLimits(const QString &varname, double var, double base
     return false;
 }
 
-QString WDFunc::StringFloatValueWithCheck(float value, int precision, bool exp)
+QString WDFunc::stringFloatValueWithCheck(float value, int precision, bool exp)
 {
     if (value >= MAXFLOAT || value <= -MAXFLOAT)
         return "***";

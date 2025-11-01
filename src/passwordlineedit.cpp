@@ -1,9 +1,7 @@
-#include "widgets/passwordlineedit.h"
-
-#include <widgets/lefunc.h>
-
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <avm-widgets/lefunc.h>
+#include <avm-widgets/passwordlineedit.h>
 
 PasswordLineEdit::PasswordLineEdit(QWidget *parent, const QString &lename, QLineEdit::EchoMode echostyle)
     : QWidget(parent)
@@ -24,10 +22,11 @@ PasswordLineEdit::PasswordLineEdit(QWidget *parent, const QString &lename, QLine
     setLayout(hlyout);
 }
 
-void PasswordLineEdit::PswLEToggleEchoMode(const QString &lename)
+void PasswordLineEdit::pswLEToggleEchoMode(const QString &lename)
 {
     QLineEdit *le = this->findChild<QLineEdit *>(lename);
-    if (le == nullptr) {
+    if (le == nullptr)
+    {
         qDebug("LE не определён");
         return;
     }
