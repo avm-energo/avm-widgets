@@ -1,8 +1,8 @@
 #include <QFile>
 #include <QPainter>
 #include <QSvgRenderer>
-#include <gen/xml/xmlattr.h>
 #include <avm-widgets/hexpbfunc.h>
+#include <gen/xml/xmlattr.h>
 
 void HexPBFunc::setProcessed(QWidget *parent, const QString &name)
 {
@@ -32,21 +32,23 @@ void HexPBFunc::setIcon(QWidget *parent, const QString &name, QStringList &attrs
     {
         // open svg resource load contents to qbytearray
         QFile file(pb->data());
-        file.open(QIODevice::ReadOnly);
-        QByteArray baData = file.readAll();
-        // load svg contents to xml document and edit contents
-        // XmlFunc::AttrsSearchedStruct str = { "path", "style", "stroke", "#8cc800" };
-        // XmlFunc::replaceDomWithNewAttrRecursively(baData, str, attrs, values);
-        XmlAttr::replaceSimpleAttr(baData, "g", attrs, values); // change group colors
-        // create svg renderer with edited contents
-        QSvgRenderer svgRenderer(baData);
-        // create pixmap target (could be a QImage)
-        QPixmap pix(svgRenderer.defaultSize());
-        pix.fill(Qt::transparent);
-        // create painter to act over pixmap
-        QPainter pixPainter(&pix);
-        // use renderer to render over painter which paints on pixmap
-        svgRenderer.render(&pixPainter);
-        pb->setIcon(QIcon(pix));
+        if (file.open(QIODevice::ReadOnly))
+        {
+            QByteArray baData = file.readAll();
+            // load svg contents to xml document and edit contents
+            // XmlFunc::AttrsSearchedStruct str = { "path", "style", "stroke", "#8cc800" };
+            // XmlFunc::replaceDomWithNewAttrRecursively(baData, str, attrs, values);
+            XmlAttr::replaceSimpleAttr(baData, "g", attrs, values); // change group colors
+            // create svg renderer with edited contents
+            QSvgRenderer svgRenderer(baData);
+            // create pixmap target (could be a QImage)
+            QPixmap pix(svgRenderer.defaultSize());
+            pix.fill(Qt::transparent);
+            // create painter to act over pixmap
+            QPainter pixPainter(&pix);
+            // use renderer to render over painter which paints on pixmap
+            svgRenderer.render(&pixPainter);
+            pb->setIcon(QIcon(pix));
+        }
     }
 }
