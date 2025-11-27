@@ -8,6 +8,7 @@ class WD_EXPORT LBLFunc
 public:
     LBLFunc();
 
+    [[nodiscard]] static ELabel *label(QWidget *parent, const QString &lblname);
     [[nodiscard]] static ELabel *New(QWidget *parent, const QString &text, const QString &lblname = "",
         const QPixmap *pm = nullptr, const QString &lbltip = "");
     [[nodiscard]] static ELabel *newT(QWidget *parent, const QString &text, const QString &lblname = "",

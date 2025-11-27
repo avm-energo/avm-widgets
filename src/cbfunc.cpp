@@ -7,6 +7,11 @@ CBFunc::CBFunc()
 {
 }
 
+QComboBox *CBFunc::comboBox(QWidget *parent, const QString &cbname)
+{
+    return parent->findChild<QComboBox *>(cbname);
+}
+
 QComboBox *CBFunc::New(QWidget *parent, const QString &cbname, const QStringList &cbsl)
 {
     auto cb = New(parent, cbsl);

@@ -8,6 +8,11 @@ class WD_EXPORT CBFunc
 public:
     CBFunc();
 
+    /// \brief Returns ComboBox widget
+    /// \param parent - pointer to parent widget
+    /// \param cbname - name of combobox to find by objectName
+    /// \return QComboBox object
+    [[nodiscard]] static QComboBox *comboBox(QWidget *parent, const QString &cbname);
     /// \brief Creates new ComboBox widget
     /// \param parent - pointer to parent widget
     /// \param cbname - name of combobox to find by objectName

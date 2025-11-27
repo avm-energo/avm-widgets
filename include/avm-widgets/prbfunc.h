@@ -6,6 +6,7 @@
 class WD_EXPORT PrbFunc
 {
 public:
+    [[nodiscard]] static QProgressBar *progressBar(QWidget *parent, const QString &prbname);
     [[nodiscard]] static QProgressBar *New(QWidget *parent, const QString &prbname);
     [[nodiscard]] static QWidget *newLBL(
         QWidget *parent, const QString &caption, const QString &prbname, const QString &format = "%p%");

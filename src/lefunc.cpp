@@ -2,6 +2,11 @@
 #include <QRegularExpressionValidator>
 #include <avm-widgets/lefunc.h>
 
+QLineEdit *LEFunc::lineEdit(QWidget *parent, const QString &lename)
+{
+    return parent->findChild<QLineEdit *>(lename);
+}
+
 QLineEdit *LEFunc::New(QWidget *parent, const QString &lename, const QString &letext, const QString &tooltip)
 {
     auto le = new QLineEdit(parent);

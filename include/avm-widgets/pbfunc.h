@@ -6,6 +6,7 @@
 class WD_EXPORT PBFunc
 {
 public:
+    QPushButton *pushButton(QWidget *parent, const QString &pbname);
     template <typename Func>
     inline static QPushButton *New(QWidget *parent, const QString &pbname, const QString &text, const Func *receiver,
         void (Func::*method)(), const QString &icon = "", const QString &pbtooltip = "")

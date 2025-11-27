@@ -2,6 +2,11 @@
 #include <QLayout>
 #include <avm-widgets/prbfunc.h>
 
+QProgressBar *PrbFunc::progressBar(QWidget *parent, const QString &prbname)
+{
+    return parent->findChild<QProgressBar *>(prbname);
+}
+
 QProgressBar *PrbFunc::New(QWidget *parent, const QString &prbname)
 {
     auto prb = new QProgressBar(parent);

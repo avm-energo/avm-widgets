@@ -3,6 +3,11 @@
 #include <avm-widgets/chbfunc.h>
 #include <gen/error.h>
 
+QCheckBox *ChBFunc::checkBox(QWidget *parent, const QString &chbname)
+{
+    return parent->findChild<QCheckBox *>(chbname);
+}
+
 QCheckBox *ChBFunc::New(QWidget *parent, const QString &chbname, const QString &chbtext)
 {
     auto chb = new QCheckBox(parent);

@@ -8,6 +8,11 @@ LBLFunc::LBLFunc()
 {
 }
 
+ELabel *LBLFunc::label(QWidget *parent, const QString &lblname)
+{
+    return parent->findChild<ELabel *>(lblname);
+}
+
 QWidget *LBLFunc::newLBL(QWidget *parent, QString lblname, QString caption, bool enabled)
 {
     static constexpr char valuesFormat[]

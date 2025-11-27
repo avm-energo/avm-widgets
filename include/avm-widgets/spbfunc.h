@@ -9,6 +9,7 @@ class WD_EXPORT SPBFunc
 public:
     SPBFunc();
 
+    [[nodiscard]] static EDoubleSpinBox *spinBox(QWidget *parent, const QString &spbname);
     [[nodiscard]] static EDoubleSpinBox *New(
         QWidget *parent, const QString &spbname, const double min, const double max, const int decimals);
     [[nodiscard]] static QWidget *newLBL(QWidget *parent, const QString &caption, const QString &spbname,

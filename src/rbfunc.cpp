@@ -2,6 +2,11 @@
 #include <QLabel>
 #include <avm-widgets/rbfunc.h>
 
+QRadioButton *RBFunc::radioButton(QWidget *parent, const QString &rbname)
+{
+    return parent->findChild<QRadioButton *>(rbname);
+}
+
 QRadioButton *RBFunc::New(QWidget *parent, const QString &rbtext, const QString &rbname)
 {
     auto rb = new QRadioButton(parent);

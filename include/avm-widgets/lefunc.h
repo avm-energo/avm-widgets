@@ -8,6 +8,7 @@
 class WD_EXPORT LEFunc
 {
 public:
+    [[nodiscard]] static QLineEdit *lineEdit(QWidget *parent, const QString &lename);
     [[nodiscard]] static QLineEdit *New(
         QWidget *parent, const QString &lename, const QString &letext = "", const QString &tooltip = "");
     [[nodiscard]] static PasswordLineEdit *newPsw(

@@ -49,6 +49,11 @@ QVariant TVFunc::data(QWidget *parent, const QString &tvname, int column)
     return QVariant();
 }
 
+QTableView *TVFunc::tableview(QWidget *parent, const QString &tvname)
+{
+    return parent->findChild<QTableView *>(tvname);
+}
+
 QTableView *TVFunc::New(QWidget *parent, const QString &tvname, QAbstractItemModel *model)
 {
     auto tv = new QTableView(parent);

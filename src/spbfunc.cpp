@@ -1,10 +1,15 @@
 #include <QHBoxLayout>
 #include <QLabel>
-#include <gen/error.h>
 #include <avm-widgets/spbfunc.h>
+#include <gen/error.h>
 
 SPBFunc::SPBFunc()
 {
+}
+
+EDoubleSpinBox *SPBFunc::spinBox(QWidget *parent, const QString &spbname)
+{
+    return parent->findChild<EDoubleSpinBox *>(spbname);
 }
 
 EDoubleSpinBox *SPBFunc::New(
