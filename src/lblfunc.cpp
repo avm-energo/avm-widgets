@@ -1,8 +1,8 @@
 #include <QHBoxLayout>
 #include <QVariant>
 #include <avm-widgets/lblfunc.h>
-#include <gen/colors.h>
-#include <gen/error.h>
+#include <avm-gen/colors.h>
+#include <avm-gen/error.h>
 
 LBLFunc::LBLFunc()
 {

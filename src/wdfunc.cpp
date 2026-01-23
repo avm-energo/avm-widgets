@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QMainWindow>
-#include <gen/pch.h>
-#include <gen/stdfunc.h>
+#include <avm-gen/pch.h>
+#include <avm-gen/stdfunc.h>
 #include <avm-widgets/emessagebox.h>
 #include <avm-widgets/wdfunc.h>
 

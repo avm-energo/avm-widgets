@@ -3,7 +3,7 @@
 #include <QFrame>
 #include <array>
 #include <export.h>
-#include <gen/netip.h>
+#include <avm-gen/netip.h>
 
 /// Thanx to https://stackoverflow.com/a/11358560/8524139
 class QLineEdit;

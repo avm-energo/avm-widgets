@@ -3,7 +3,7 @@
 #include <QCheckBox>
 #include <avm-widgets/checkboxgroup.h>
 #include <export.h>
-#include <gen/std_ext.h>
+#include <avm-gen/std_ext.h>
 
 class WD_EXPORT ChBFunc
 {

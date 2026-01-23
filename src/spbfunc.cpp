@@ -1,7 +1,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <avm-widgets/spbfunc.h>
-#include <gen/error.h>
+#include <avm-gen/error.h>
 
 SPBFunc::SPBFunc()
 {

@@ -4,7 +4,7 @@
 #include <avm-widgets/lblfunc.h>
 #include <avm-widgets/lefunc.h>
 #include <avm-widgets/pbfunc.h>
-#include <gen/settings.h>
+#include <avm-gen/settings.h>
 FileFunc::FileFunc()
 {
 }

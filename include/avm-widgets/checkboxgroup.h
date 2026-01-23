@@ -2,7 +2,7 @@
 
 #include <QCheckBox>
 #include <bitset>
-#include <gen/std_ext.h>
+#include <avm-gen/std_ext.h>
 #include <export.h>
 
 #define BITSET_MAX_COUNT 32

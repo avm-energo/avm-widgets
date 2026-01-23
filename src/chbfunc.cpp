@@ -1,7 +1,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <avm-widgets/chbfunc.h>
-#include <gen/error.h>
+#include <avm-gen/error.h>
 
 QCheckBox *ChBFunc::checkBox(QWidget *parent, const QString &chbname)
 {

@@ -39,12 +39,17 @@ if(NOT CMAKE_BUILD_TYPE)
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
-find_package(QT NAMES Qt5 Qt6)
+find_package(QT NAMES Qt6)
 find_package(Qt${QT_VERSION_MAJOR}
-  COMPONENTS Svg Widgets REQUIRED
+  COMPONENTS Core Svg Widgets Xml REQUIRED
 )
 
-include(gen)
+find_package(avm-gen QUIET)
+if(${avm-gen_FOUND})
+  message(STATUS "Found package avm-gen")
+else()
+  include(gen)
+endif()
 
 # Collecting sources
 set(WIDGETS_INCLUDE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/include")
@@ -81,6 +86,8 @@ target_link_libraries(
     ${PROJECT_NAME} PUBLIC
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Svg
+    Qt${QT_VERSION_MAJOR}::Xml
+    Qt${QT_VERSION_MAJOR}::Core
     avm-gen
 )
 
@@ -103,7 +110,7 @@ install(TARGETS ${PROJECT_NAME}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
 
 # create version file for cmake project
 write_basic_package_version_file(${PROJECT_NAME}ConfigVersion.cmake
