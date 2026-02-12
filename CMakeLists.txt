@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 
 project(avm-widgets LANGUAGES CXX
   DESCRIPTION "Widgets library for AVM-Energo C++ projects"
-  VERSION 2.3.0)
+  VERSION 2.4.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -44,7 +44,7 @@ find_package(Qt${QT_VERSION_MAJOR}
   COMPONENTS Core Svg Widgets Xml REQUIRED
 )
 
-find_package(avm-gen QUIET)
+find_package(avm-gen 1.11.0 QUIET)
 if(${avm-gen_FOUND})
   message(STATUS "Found package avm-gen")
 else()

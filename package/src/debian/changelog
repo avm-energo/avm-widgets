@@ -1,3 +1,9 @@
+libavm-widgets (2.4.0) unstable; urgency=low
+
+  [^] libavm-gen up to 1.11.0
+
+ -- AVM-Energo <support@avmenergo.ru>  Thu, 12 Feb 2026 15:39:20 +0300
+
 libavm-widgets (2.3.0) unstable; urgency=low
 
   [+] ELabel class added to let the Label consist some useful information

@@ -6,4 +6,4 @@ Section: libs
 Package: libavm-widgets
 Description: Widgets lib for AVM-Energo projects
 Architecture: amd64
-Depends: ${shlibs:Depends}, libavm-gen (>= 1.10.2)
+Depends: ${shlibs:Depends}, libavm-gen (>= 1.11.0)
