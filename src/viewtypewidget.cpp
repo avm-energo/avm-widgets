@@ -9,7 +9,7 @@
 
 using namespace ViewType;
 
-ViewTypeWidget::ViewTypeWidget(QWidget *parent, const QString &name, ViewTypes type) : QWidget { parent }, m_type(type)
+ViewTypeWidget::ViewTypeWidget(QWidget *parent, ViewTypes type) : QWidget { parent }, m_type(type)
 {
     QHBoxLayout *lyout = new QHBoxLayout(this);
     switch (type)
@@ -30,16 +30,15 @@ ViewTypeWidget::ViewTypeWidget(QWidget *parent, const QString &name, ViewTypes t
     default:
         break;
     }
-
-    setObjectName(name);
+    this->setLayout(lyout);
 }
 
-valueType ViewTypeWidget::data()
+ValueType ViewTypeWidget::data()
 {
     return m_data;
 }
 
-void ViewTypeWidget::setData(const valueType &data)
+void ViewTypeWidget::setData(const ValueType &data)
 {
     m_data = data;
     switch (m_type)
@@ -106,4 +105,19 @@ void ViewTypeWidget::changeEvent(QEvent *event)
     }
     else
         QWidget::changeEvent(event);
+}
+
+ViewTypeWidget *ViewTypeFunc::New(QWidget *parent, const QString &name, ViewTypes type)
+{
+    auto vtw = new ViewTypeWidget(parent, type);
+    vtw->setObjectName(name);
+    return vtw;
+}
+
+ViewTypeWidget *ViewTypeFunc::widget(QWidget *parent, const QString &name)
+{
+    auto vtw = parent->findChild<ViewTypeWidget *>(name);
+    if (vtw == nullptr)
+        return nullptr;
+    return vtw;
 }
