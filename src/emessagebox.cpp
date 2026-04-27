@@ -74,9 +74,9 @@ bool EMessageBox::next(QWidget *parent, QWidget *w)
 bool EMessageBox::editableNext(EEditablePopup *popup)
 {
     m_result = false;
-    popup->execPopup();
     QObject::connect(popup, &EPopup::accepted, [] { m_result = true; });
     QObject::connect(popup, &EPopup::cancelled, [] { m_result = false; });
+    popup->execPopup();
     return m_result;
 }
 

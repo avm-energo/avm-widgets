@@ -62,9 +62,7 @@ IPCtrl::IPCtrl(QWidget *parent) : QFrame(parent)
     connect(this, &IPCtrl::signalTextChanged, this, &IPCtrl::slotTextChanged, Qt::QueuedConnection);
 }
 
-IPCtrl::~IPCtrl()
-{
-}
+IPCtrl::~IPCtrl() = default;
 
 void IPCtrl::slotTextChanged(QLineEdit *pEdit)
 {

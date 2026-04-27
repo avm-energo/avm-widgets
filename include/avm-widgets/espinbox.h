@@ -2,13 +2,17 @@
 
 #include <QSpinBox>
 #include <QWheelEvent>
+#include <export.h>
 
-class ESpinBox : public QSpinBox
+/// \brief QSpinBox that ignores wheel events unless the widget has keyboard focus,
+///        preventing accidental value changes while scrolling a parent widget.
+class WD_EXPORT ESpinBox : public QSpinBox
 {
     Q_OBJECT
 public:
-    ESpinBox(QWidget *parent = nullptr);
+    explicit ESpinBox(QWidget *parent = nullptr);
 
 protected:
-    virtual void wheelEvent(QWheelEvent *event);
+    /// \brief Ignores wheel events when the widget does not have focus.
+    void wheelEvent(QWheelEvent *event) override;
 };

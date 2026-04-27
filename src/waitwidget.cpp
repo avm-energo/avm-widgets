@@ -31,6 +31,9 @@ WaitWidget::WaitWidget(const QString &movie, QWidget *parent) : QWidget(parent)
     IsIncrement = true;
     TimeFormat = WW_SIMPLE;
     Seconds = 0;
+    m_timer = new QTimer(this);
+    m_timer->setInterval(1000);
+    connect(m_timer, &QTimer::timeout, this, &WaitWidget::updateSeconds);
 }
 
 WaitWidget::~WaitWidget()
@@ -50,18 +53,19 @@ void WaitWidget::init(WaitWidget::ww_struct &ww)
 
 void WaitWidget::start()
 {
+    if (!m_timer->isActive())
+        m_timer->start();
     show();
-    m_movie->start();
-    QTimer *tmrs = new QTimer(this);
-    tmrs->setInterval(1000);
-    connect(tmrs, &QTimer::timeout, this, &WaitWidget::updateSeconds);
-    tmrs->start();
+    if (m_movie->isValid())
+        m_movie->start();
 }
 
 void WaitWidget::stop()
 {
+    m_timer->stop();
+    if (m_movie->isValid())
+        m_movie->stop();
     emit finished();
-    m_movie->stop();
     close();
 }
 
@@ -93,15 +97,13 @@ void WaitWidget::updateSeconds()
 void WaitWidget::paintEvent(QPaintEvent *e)
 {
     // draw text in bottom
-    QSize size = QSize(320, 240);
     QSize wsize = QSize(310, 380);
-    int left = wsize.width() / 2 - size.width() / 2;
     QPainter p(this);
     QFont font;
     QFontMetrics fm(font);
     int center = wsize.width() / 2;
     int msgwidth = fm.horizontalAdvance(Message); //+10;
-    left = center - msgwidth / 2;
+    int left = center - msgwidth / 2;
     QRect mrect = QRect(left, height() - 20, msgwidth, 20);
     p.setPen(Qt::black);
     p.drawText(mrect, Qt::AlignCenter, Message);
@@ -130,15 +132,13 @@ void WaitWidget::paintEvent(QPaintEvent *e)
 void WaitWidget::keyPressEvent(QKeyEvent *e)
 {
     if ((e->key() == Qt::Key_Escape) && IsAllowedToStop)
-    {
         stop();
-        emit countZero();
-    }
     QWidget::keyPressEvent(e);
 }
 
 void WaitWidget::closeEvent(QCloseEvent *e)
 {
+    m_timer->stop();
     emit countZero();
     e->accept();
 }

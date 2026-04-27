@@ -93,6 +93,3 @@ CheckBoxGroup::CheckBoxGroup(const QStringList &desc, int count, QWidget *parent
     setLayout(flowLayout);
 }
 
-CheckBoxGroup::~CheckBoxGroup()
-{
-}

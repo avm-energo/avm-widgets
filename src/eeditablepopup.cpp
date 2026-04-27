@@ -54,7 +54,7 @@ void EEditablePopup::acceptSlot()
             *tmpf = fl;
         else
         {
-            EMessageBox::warning(this, "Значение " + it->first + "ошибочно, будет принудительно приравнено нулю");
+            EMessageBox::warning(this, "Значение " + it->first + " ошибочно, будет принудительно приравнено нулю");
             *tmpf = 0.0;
         }
     }

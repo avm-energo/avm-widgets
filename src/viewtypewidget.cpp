@@ -67,7 +67,7 @@ void ViewTypeWidget::setData(const ValueType &data)
                 LBLFunc::setText(this, name + QString::number(i), sl.at(i));
         }
         else
-            qDebug() << "Improper data for IpControl: " << std::get<QString>(data);
+            qDebug() << "Improper data for IpControl (expected at least 4 parts)";
         break;
     }
     case SerialNumber:
@@ -93,18 +93,12 @@ void ViewTypeWidget::setData(const ValueType &data)
 
 void ViewTypeWidget::changeEvent(QEvent *event)
 {
-    if (event->type() == QEvent::EnabledChange)
+    if (event->type() == QEvent::EnabledChange && m_type == IpControl)
     {
-        if (m_type == IpControl)
-        {
-            for (int i = 0; i < 4; ++i)
-                WDFunc::setEnabled(this, name + QString::number(i), isEnabled());
-        }
-        else
-            setEnabled(isEnabled());
+        for (int i = 0; i < 4; ++i)
+            WDFunc::setEnabled(this, name + QString::number(i), isEnabled());
     }
-    else
-        QWidget::changeEvent(event);
+    QWidget::changeEvent(event);
 }
 
 ViewTypeWidget *ViewTypeFunc::New(QWidget *parent, const QString &name, ViewTypes type)

@@ -5,12 +5,15 @@
 #include <QWidget>
 #include <export.h>
 
+/// \brief QPushButton that stores an associated data string (e.g. an SVG resource path).
 class WD_EXPORT HexagonButton : public QPushButton
 {
     Q_OBJECT
 public:
-    HexagonButton(QWidget *parent = nullptr);
+    explicit HexagonButton(QWidget *parent = nullptr);
+    /// \brief Stores \a data as the button's payload (e.g. icon resource path).
     void setData(const QString &data);
+    /// \brief Returns the stored payload string.
     QString data();
 
 private:

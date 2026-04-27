@@ -9,7 +9,7 @@ FileFunc::FileFunc()
 {
 }
 
-QString FileFunc::chooseFileForOpen(QWidget *parent, QString mask)
+QString FileFunc::chooseFileForOpen(QWidget *parent, const QString &mask)
 {
     auto workPath = Settings::workDir();
     auto dlg = new QFileDialog(parent);

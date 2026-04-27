@@ -1,3 +1,15 @@
+libavm-widgets-dev (2.6.0) unstable; urgency=low
+
+  [#*] refactoring and bugfixes by claude
+
+ -- AVM-Energo <support@avmenergo.ru>  Mon, 27 Apr 2026 14:04:28 +0300
+
+libavm-widgets-dev (2.5.0) unstable; urgency=low
+
+  [+] ViewType widget
+
+ -- AVM-Energo <support@avmenergo.ru>  Fri, 17 Apr 2026 17:53:05 +0300
+
 libavm-widgets-dev (2.4.0) unstable; urgency=low
 
   [^] libavm-gen up to 1.11.0

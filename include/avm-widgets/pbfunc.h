@@ -3,10 +3,14 @@
 #include <QPushButton>
 #include <export.h>
 
+/// \brief Factory and connection helpers for QPushButton widgets.
 class WD_EXPORT PBFunc
 {
 public:
+    /// \brief Finds a QPushButton by \a pbname inside \a parent.
     QPushButton *pushButton(QWidget *parent, const QString &pbname);
+
+    /// \brief Creates a new QPushButton and connects its clicked() signal to a member function.
     template <typename Func>
     inline static QPushButton *New(QWidget *parent, const QString &pbname, const QString &text, const Func *receiver,
         void (Func::*method)(), const QString &icon = "", const QString &pbtooltip = "")
@@ -16,6 +20,7 @@ public:
         return pb;
     }
 
+    /// \brief Creates a new QPushButton and connects its clicked() signal to a functor.
     template <typename Functor>
     inline static QPushButton *New(QWidget *parent, const QString &pbname, const QString &text, Functor &&functor,
         const QString &icon = "", const QString &pbtooltip = "")
@@ -25,6 +30,7 @@ public:
         return pb;
     }
 
+    /// \brief Creates a new QPushButton and connects its clicked() signal to a functor with a context object.
     template <typename Functor>
     inline static QPushButton *New(QWidget *parent, const QString &pbname, const QString &text, QObject *context,
         Functor &&functor, const QString &icon = "", const QString &pbtooltip = "")
@@ -34,6 +40,7 @@ public:
         return pb;
     }
 
+    /// \brief Finds an existing button by name and connects its clicked() to a context-bound functor.
     template <typename Functor>
     inline static void Connect(QWidget *parent, const QString &pbname, QObject *context, Functor &&functor)
     {
@@ -42,6 +49,7 @@ public:
             QObject::connect(pb, &QPushButton::clicked, context, functor);
     }
 
+    /// \brief Finds an existing button by name and connects its clicked() to a member function.
     template <typename Object>
     inline static void Connect(QWidget *parent, const QString &pbname, const Object *receiver, void (Object::*method)())
     {

@@ -78,7 +78,7 @@ public:
       */
     const QColor &color() const noexcept;
 
-    virtual QSize sizeHint() const noexcept;
+    QSize sizeHint() const noexcept override;
     int heightForWidth(int w) const noexcept;
 
 public slots:
@@ -113,7 +113,7 @@ public slots:
     void setColor(const QColor &color) noexcept;
 
 protected:
-    virtual void paintEvent(QPaintEvent *);
+    void paintEvent(QPaintEvent *) override;
 
 private:
     int m_angle;
