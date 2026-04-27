@@ -112,7 +112,7 @@ public:
     void setValue(const std::vector<T> &array)
     {
         auto spinBoxes = findChildren<S *>();
-        const int count = std::min(spinBoxes.size(), static_cast<int>(array.size()));
+        const int count = std::min(static_cast<int>(spinBoxes.size()), static_cast<int>(array.size()));
         for (auto i = 0; i < count; ++i)
             spinBoxes.at(i)->setValue(array.at(i));
     }
