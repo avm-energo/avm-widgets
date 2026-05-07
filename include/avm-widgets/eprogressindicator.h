@@ -79,7 +79,7 @@ public:
     const QColor &color() const noexcept;
 
     QSize sizeHint() const noexcept override;
-    int heightForWidth(int w) const noexcept;
+    int heightForWidth(int w) const noexcept override;
 
 public slots:
     /*! Starts the spin animation.
