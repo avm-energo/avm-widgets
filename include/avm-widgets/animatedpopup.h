@@ -12,8 +12,7 @@ class AnimatedPopup : public QWidget
 {
 
 public:
-    explicit AnimatedPopup(QWidget *parent = nullptr);
-    ~AnimatedPopup() override = default;
+    ~AnimatedPopup();
 
     enum Level
     {
@@ -22,12 +21,14 @@ public:
         Error
     };
 
+    static void setParent(QWidget *parent);
+    static AnimatedPopup *instance();
     void showPopup(const QString &message, const Level l, const int msec);
 
 private:
     static constexpr int m_animationDuration = 500;
     static constexpr int m_activePopupLimit = 3;
-    static constexpr int m_delayBeforeNextPopup = 500;
+    static constexpr int m_delayBeforeNextPopup = 100;
     static constexpr int rightMargin = 20;
     static constexpr int bottomMargin = 20;
 
@@ -49,6 +50,10 @@ private:
                                             "  border-radius: 8px;"
                                             "}";
 
+    explicit AnimatedPopup(QWidget *parent = nullptr);
+    static AnimatedPopup *m_instance;
+    QWidget *m_parent = nullptr;
+
     struct PopupMessage
     {
         QString text;
@@ -56,7 +61,6 @@ private:
         int duration;
     };
 
-    QWidget *m_parent;
     QQueue<PopupMessage> m_messageQueue;
     QTimer *m_globalTimer;
     QList<QWidget *> m_activePopups;

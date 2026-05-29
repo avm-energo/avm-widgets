@@ -11,6 +11,14 @@ AnimatedPopup::AnimatedPopup(QWidget *parent) : QWidget(parent), m_parent(parent
     setupGlobalTimer();
 }
 
+AnimatedPopup::~AnimatedPopup()
+{
+    if (m_instance == this)
+    {
+        m_instance = nullptr;
+    }
+}
+
 void AnimatedPopup::setupUI()
 {
     setAttribute(Qt::WA_TranslucentBackground);
@@ -77,13 +85,14 @@ QWidget *AnimatedPopup::createPopupWidget(const QString &message, const Level l)
     contentLayout->setSpacing(10);
 
     QLabel *iconLabel = new QLabel(backgroundFrame);
+    iconLabel->setStyleSheet("background: transparent; border: none; padding: 0;");
     QPixmap icon = getIconForLevel(l);
     if (!icon.isNull())
     {
         iconLabel->setPixmap(icon.scaled(22, 22, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
     iconLabel->setFixedSize(22, 22);
-    contentLayout->addWidget(iconLabel, 0, Qt::AlignTop);
+    contentLayout->addWidget(iconLabel, 0, Qt::AlignVCenter);
 
     QLabel *textLabel = new QLabel(message, backgroundFrame);
     textLabel->setStyleSheet("color: white; font-size: 14px; font-family: system-ui; background: transparent;");
@@ -140,53 +149,52 @@ void AnimatedPopup::animatePopup(QWidget *popup, const int duration)
     QTimer *timer = new QTimer(popup);
     timer->setSingleShot(true);
 
-    connect(timer, &QTimer::timeout, this,
-        [this, popup]()
+    connect(timer, &QTimer::timeout, this, [this, popup]() {
+        if (!popup)
+            return;
+
+        // Перед закрытием останавливаем любые анимации пересчета позиций
+        QList<QPropertyAnimation *> oldAnims = popup->findChildren<QPropertyAnimation *>("repositionAnim");
+        for (auto *oldAnim : std::as_const(oldAnims))
         {
-            if (!popup)
-                return;
+            oldAnim->stop();
+            delete oldAnim;
+        }
 
-            // Перед закрытием останавливаем любые анимации пересчета позиций
-            QList<QPropertyAnimation *> oldAnims = popup->findChildren<QPropertyAnimation *>("repositionAnim");
-            for (auto *oldAnim : std::as_const(oldAnims))
+        removeActivePopup(popup);
+
+        // Создаем анимацию перемещения вниз
+        QPropertyAnimation *posAnimation = new QPropertyAnimation(popup, "pos", popup);
+        posAnimation->setDuration(m_animationDuration);
+        posAnimation->setStartValue(popup->pos());
+        posAnimation->setEndValue(QPoint(popup->x(), popup->y() + popup->height()));
+        posAnimation->setEasingCurve(QEasingCurve::InCubic);
+
+        // Создаем анимацию прозрачности
+        QPropertyAnimation *opacityAnimation = new QPropertyAnimation(popup->graphicsEffect(), "opacity", popup);
+        opacityAnimation->setStartValue(1.0);
+        opacityAnimation->setEndValue(0.0);
+        opacityAnimation->setDuration(m_animationDuration);
+        opacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
+
+        // Используем счетчик завершения вместо QParallelAnimationGroup,
+        // так как группы часто вызывают утечки "визуальных" окон в Qt при ToolTip
+        auto *animationCounter = new int(2);
+        auto checkAndCleanup = [this, popup, animationCounter]() {
+            (*animationCounter)--;
+            if (*animationCounter == 0)
             {
-                oldAnim->stop();
-                delete oldAnim;
+                delete animationCounter;
+                cleanupFinishedPopup(popup);
             }
+        };
 
-            // Создаем анимацию перемещения вниз
-            QPropertyAnimation *posAnimation = new QPropertyAnimation(popup, "pos", popup);
-            posAnimation->setDuration(m_animationDuration);
-            posAnimation->setStartValue(popup->pos());
-            posAnimation->setEndValue(QPoint(popup->x(), popup->y() + popup->height()));
-            posAnimation->setEasingCurve(QEasingCurve::InCubic);
+        connect(posAnimation, &QPropertyAnimation::finished, this, checkAndCleanup);
+        connect(opacityAnimation, &QPropertyAnimation::finished, this, checkAndCleanup);
 
-            // Создаем анимацию прозрачности
-            QPropertyAnimation *opacityAnimation = new QPropertyAnimation(popup->graphicsEffect(), "opacity", popup);
-            opacityAnimation->setStartValue(1.0);
-            opacityAnimation->setEndValue(0.0);
-            opacityAnimation->setDuration(m_animationDuration);
-            opacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
-
-            // Используем счетчик завершения вместо QParallelAnimationGroup,
-            // так как группы часто вызывают утечки "визуальных" окон в Qt при ToolTip
-            auto *animationCounter = new int(2);
-            auto checkAndCleanup = [this, popup, animationCounter]()
-            {
-                (*animationCounter)--;
-                if (*animationCounter == 0)
-                {
-                    delete animationCounter;
-                    cleanupFinishedPopup(popup);
-                }
-            };
-
-            connect(posAnimation, &QPropertyAnimation::finished, this, checkAndCleanup);
-            connect(opacityAnimation, &QPropertyAnimation::finished, this, checkAndCleanup);
-
-            posAnimation->start(QAbstractAnimation::DeleteWhenStopped);
-            opacityAnimation->start(QAbstractAnimation::DeleteWhenStopped);
-        });
+        posAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+        opacityAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+    });
 
     timer->start(duration);
 }
@@ -225,7 +233,6 @@ void AnimatedPopup::cleanupFinishedPopup(QWidget *popup)
     if (!popup)
         return;
 
-    removeActivePopup(popup);
     popup->deleteLater();
 
     repositionActivePopups();
@@ -331,4 +338,29 @@ void AnimatedPopup::repositionActivePopups()
 
         accumulatedHeight += activePopup->height() + 10;
     }
+}
+
+AnimatedPopup *AnimatedPopup::m_instance = nullptr;
+
+void AnimatedPopup::setParent(QWidget *parent)
+{
+    if (!m_instance)
+    {
+        m_instance = new AnimatedPopup(parent);
+    }
+    else
+    {
+        m_instance->QWidget::setParent(parent);
+    }
+
+    m_instance->m_parent = parent;
+}
+
+AnimatedPopup *AnimatedPopup::instance()
+{
+    if (!m_instance)
+    {
+        m_instance = new AnimatedPopup(nullptr);
+    }
+    return m_instance;
 }
