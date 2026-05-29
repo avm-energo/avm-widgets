@@ -6,22 +6,12 @@
 bool EMessageBox::m_result = false;
 QByteArray EMessageBox::m_hash = "d93fdd6d1fb5afcca939fa650b62541d09dbcb766f41c39352dc75f348fb35dc";
 
-static EPopup *getPopupInstance(QWidget *parent)
-{
-    static EPopup popup(EPopup::INFOMESSAGE, QString(), nullptr);
+// static AnimatedPopup *getPopupInstance(QWidget *parent)
+// {
+//     static AnimatedPopup popup(parent);
 
-    // Сбрасываем старые связи Qt, чтобы не было повторных вызовов лямбд
-    QObject::disconnect(&popup, nullptr, nullptr, nullptr);
-
-    // Меняем родителя и сбрасываем флаги (важно для корректного отображения геометрии)
-    popup.setParent(parent);
-    if (parent)
-    {
-        popup.setWindowFlags(popup.windowFlags() | Qt::Dialog);
-    }
-
-    return &popup;
-}
+//     return &popup;
+// }
 
 void EMessageBox::setHash(const QByteArray &ba)
 {
@@ -40,8 +30,8 @@ bool EMessageBox::password(QWidget *parent, const QString &hash)
 void EMessageBox::information(QWidget *parent, const QString &msg)
 {
     m_result = false;
-    auto popup = new EPopup(EPopup::INFOMESSAGE, msg, parent);
-    popup->exec();
+    auto popup = new AnimatedPopup(parent);
+    popup->showPopup(msg, AnimatedPopup::Info, 5000);
 }
 
 bool EMessageBox::question(QWidget *parent, const QString &msg)
@@ -57,16 +47,15 @@ bool EMessageBox::question(QWidget *parent, const QString &msg)
 void EMessageBox::warning(QWidget *parent, const QString &msg)
 {
     m_result = false;
-    auto popup = new EPopup(EPopup::WARNMESSAGE, LBLFunc::New(parent, msg), parent);
-    popup->exec();
+    auto popup = new AnimatedPopup(parent);
+    popup->showPopup(msg, AnimatedPopup::Warning, 5000);
 }
 
 void EMessageBox::error(QWidget *parent, const QString &msg)
 {
     m_result = false;
-    auto popup = new EPopup(EPopup::ERMESSAGE, msg, parent);
-    popup->setWindowFlag(Qt::WindowStaysOnTopHint, true);
-    popup->exec();
+    auto popup = new AnimatedPopup(parent);
+    popup->showPopup(msg, AnimatedPopup::Error, 5000);
 }
 
 bool EMessageBox::next(QWidget *parent, const QString &msg)
