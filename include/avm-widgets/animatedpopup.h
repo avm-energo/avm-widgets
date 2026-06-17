@@ -18,7 +18,7 @@ public:
     {
         Info,
         Warning,
-        Error
+        Error,
     };
 
     static void setParent(QWidget *parent);
@@ -29,8 +29,8 @@ private:
     static constexpr int m_animationDuration = 500;
     static constexpr int m_activePopupLimit = 3;
     static constexpr int m_delayBeforeNextPopup = 100;
-    static constexpr int rightMargin = 20;
-    static constexpr int bottomMargin = 20;
+    static constexpr int m_rightMargin = 20;
+    static constexpr int m_bottomMargin = 20;
 
     static constexpr const char *infoStyle = "#PopupBackground {"
                                              "  background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 "
@@ -73,7 +73,6 @@ private:
     void animatePopup(QWidget *popup, const int duration);
     void startAnimation(QWidget *popup);
     void positionPopup(QWidget *popup);
-    void repositionActivePopups();
     void cleanupFinishedPopup(QWidget *popup);
 
     void addActivePopup(QWidget *popup);

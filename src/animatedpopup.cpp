@@ -56,7 +56,6 @@ void AnimatedPopup::processNextPopup()
     QWidget *popup = createPopupWidget(msg.text, msg.l);
     animatePopup(popup, msg.duration);
 
-
     if (!m_globalTimer->isActive() && hasFreeSlotForPopup())
     {
         m_globalTimer->start(m_delayBeforeNextPopup);
@@ -134,10 +133,10 @@ void AnimatedPopup::positionPopup(QWidget *popup)
         }
     }
 
-    int x = parentGeometry.x() + parentGeometry.width() - popup->width() - rightMargin;
+    int x = parentGeometry.x() + parentGeometry.width() - popup->width() - m_rightMargin;
 
     // Стартовая позиция (до анимации появления)
-    int y = parentGeometry.y() + parentGeometry.height() - bottomMargin - accumulatedHeight;
+    int y = parentGeometry.y() + parentGeometry.height() - m_bottomMargin - accumulatedHeight;
 
     popup->move(x, y);
 }
@@ -235,8 +234,6 @@ void AnimatedPopup::cleanupFinishedPopup(QWidget *popup)
 
     popup->deleteLater();
 
-    repositionActivePopups();
-
     if (!m_globalTimer->isActive() && hasFreeSlotForPopup())
     {
         processNextPopup();
@@ -288,55 +285,12 @@ QString AnimatedPopup::getLevelStyleSheet(const Level l) const
     {
     case Level::Info:
         return infoStyle;
-        break;
     case Level::Warning:
         return warnStyle;
-        break;
     case Level::Error:
         return errStyle;
-        break;
     default:
         return "";
-    }
-}
-
-void AnimatedPopup::repositionActivePopups()
-{
-    QRect parentGeometry = m_parent ? m_parent->geometry() : QGuiApplication::primaryScreen()->availableGeometry();
-
-    int accumulatedHeight = 0;
-
-    for (QWidget *activePopup : std::as_const(m_activePopups))
-    {
-        // Безопасная проверка: если виджет удаляется или скрывается, пропускаем его
-        if (!activePopup)
-            continue;
-
-        int x = parentGeometry.x() + parentGeometry.width() - activePopup->width() - rightMargin;
-        int targetY = parentGeometry.y() + parentGeometry.height() - bottomMargin - accumulatedHeight;
-
-        QPoint targetPos(x, targetY - activePopup->height());
-
-        if (activePopup->pos() != targetPos)
-        {
-            // Удаляем старые анимации repositionAnim
-            QList<QPropertyAnimation *> oldAnims = activePopup->findChildren<QPropertyAnimation *>("repositionAnim");
-            for (auto *oldAnim : std::as_const(oldAnims))
-            {
-                oldAnim->stop();
-                delete oldAnim;
-            }
-
-            QPropertyAnimation *moveAnim = new QPropertyAnimation(activePopup, "pos", activePopup);
-            moveAnim->setObjectName("repositionAnim");
-            moveAnim->setDuration(m_animationDuration);
-            moveAnim->setStartValue(activePopup->pos());
-            moveAnim->setEndValue(targetPos);
-            moveAnim->setEasingCurve(QEasingCurve::OutCubic);
-            moveAnim->start(QAbstractAnimation::DeleteWhenStopped);
-        }
-
-        accumulatedHeight += activePopup->height() + 10;
     }
 }
 

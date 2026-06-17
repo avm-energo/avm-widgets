@@ -6,13 +6,6 @@
 bool EMessageBox::m_result = false;
 QByteArray EMessageBox::m_hash = "d93fdd6d1fb5afcca939fa650b62541d09dbcb766f41c39352dc75f348fb35dc";
 
-// static AnimatedPopup *getPopupInstance(QWidget *parent)
-// {
-//     static AnimatedPopup popup(parent);
-
-//     return &popup;
-// }
-
 void EMessageBox::setHash(const QByteArray &ba)
 {
     m_hash = ba;
@@ -30,8 +23,19 @@ bool EMessageBox::password(QWidget *parent, const QString &hash)
 void EMessageBox::information(QWidget *parent, const QString &msg)
 {
     m_result = false;
-    auto popup = new AnimatedPopup(parent);
-    popup->showPopup(msg, AnimatedPopup::Info, 5000);
+    AnimatedPopup::instance()->showPopup(msg, AnimatedPopup::Info, 5000);
+}
+
+void EMessageBox::warning(QWidget *parent, const QString &msg)
+{
+    m_result = false;
+    AnimatedPopup::instance()->showPopup(msg, AnimatedPopup::Warning, 5000);
+}
+
+void EMessageBox::error(QWidget *parent, const QString &msg)
+{
+    m_result = false;
+    AnimatedPopup::instance()->showPopup(msg, AnimatedPopup::Error, 5000);
 }
 
 bool EMessageBox::question(QWidget *parent, const QString &msg)
@@ -42,20 +46,6 @@ bool EMessageBox::question(QWidget *parent, const QString &msg)
     QObject::connect(popup, &EPopup::cancelled, [] { m_result = false; });
     popup->exec();
     return m_result;
-}
-
-void EMessageBox::warning(QWidget *parent, const QString &msg)
-{
-    m_result = false;
-    auto popup = new AnimatedPopup(parent);
-    popup->showPopup(msg, AnimatedPopup::Warning, 5000);
-}
-
-void EMessageBox::error(QWidget *parent, const QString &msg)
-{
-    m_result = false;
-    auto popup = new AnimatedPopup(parent);
-    popup->showPopup(msg, AnimatedPopup::Error, 5000);
 }
 
 bool EMessageBox::next(QWidget *parent, const QString &msg)
