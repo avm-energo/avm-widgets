@@ -1,6 +1,7 @@
 #pragma once
 
 #include "epopup.h"
+
 #include <export.h>
 
 /// \brief EPopup subclass that prompts for a password and validates it against a SHA3-256 hash.
@@ -22,4 +23,5 @@ signals:
 protected:
     void keyPressEvent(QKeyEvent *e) override;
     void closeEvent(QCloseEvent *e) override;
+    void paintEvent(QPaintEvent *e) override;
 };

@@ -18,7 +18,7 @@ EPopup::EPopup(MessageTypes type, const QString &msg, QWidget *parent) : QDialog
 {
     setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     setModal(true);
-    this->type = type;
+    this->m_type = type;
     create(type, LBLFunc::New(parent, msg), parent);
 }
 
@@ -26,7 +26,7 @@ EPopup::EPopup(MessageTypes type, QWidget *w, QWidget *parent) : QDialog(parent)
 {
     setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     setModal(true);
-    this->type = type;
+    this->m_type = type;
     create(type, w, parent);
 }
 
@@ -87,6 +87,7 @@ void EPopup::closeEvent(QCloseEvent *e)
 
 void EPopup::keyPressEvent(QKeyEvent *e)
 {
+
     if (e->key() == Qt::Key_Escape)
         cancelSlot();
     if ((e->key() == Qt::Key_Enter) || (e->key() == Qt::Key_Return))
@@ -113,8 +114,8 @@ void EPopup::paintEvent(QPaintEvent *event)
 
     int m_borderWidth = 2;
     Qt::Orientation m_gradientOrientation = Qt::Horizontal;
-    QColor m_gradientColor1 = map[type].firstColor;  // Синий
-    QColor m_gradientColor2 = map[type].secondColor; // Фиолетовый
+    QColor m_gradientColor1 = map[m_type].firstColor;
+    QColor m_gradientColor2 = map[m_type].secondColor;
 
     // Создаем внешний путь с закругленными углами
     QPainterPath outerPath;

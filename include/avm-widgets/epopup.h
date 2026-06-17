@@ -46,7 +46,7 @@ private:
         { WITHOUTANYBUTTONS, { ":/icons/ordinary-hex.svg", QColor(243, 255, 197), QColor(254, 240, 138) } },
     };
 
-    MessageTypes type;
+    MessageTypes m_type;
 
     /// \brief Builds the dialog layout for the given \a type and content widget \a w.
     void create(MessageTypes &type, QWidget *w, QWidget *parent = nullptr);
