@@ -7,61 +7,45 @@
 #include <avm-widgets/passwordlineedit.h>
 #include <avm-widgets/pbfunc.h>
 #include <avm-widgets/styleloader.h>
+#include <qpainter.h>
+#include <qpainterpath.h>
 
 EPopup::EPopup(QWidget *parent) : QDialog(parent)
 {
 }
 
-EPopup::EPopup(MessageTypes type, const QString &msg, QWidget *parent)
+EPopup::EPopup(MessageTypes type, const QString &msg, QWidget *parent) : QDialog(parent)
 {
-    setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
-    setWindowModality(Qt::WindowModal);
-    setStyleSheet("QFrame {border-radius: 10px; border: 3px solid gray;}");
+    setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    setModal(true);
+    this->type = type;
     create(type, LBLFunc::New(parent, msg), parent);
 }
 
-EPopup::EPopup(MessageTypes type, QWidget *w, QWidget *parent)
+EPopup::EPopup(MessageTypes type, QWidget *w, QWidget *parent) : QDialog(parent)
 {
-    setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
-    setWindowModality(Qt::WindowModal);
-    setStyleSheet("QFrame {border-radius: 10px; border: 3px solid gray;}");
+    setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    setModal(true);
+    this->type = type;
     create(type, w, parent);
 }
 
 void EPopup::create(MessageTypes &type, QWidget *w, QWidget *parent)
 {
-    struct msgsStruct
-    {
-        QString pxFile;
-        QString bgrdColorLight;
-        QString bgrdColorDark;
-    };
-
-    QMap<MessageTypes, msgsStruct> map = {
-        { INFOMESSAGE, { ":/icons/info-hex.svg", "d6ffce", "158000" } },
-        { WARNMESSAGE, { ":/icons/warn-hex.svg", "ffffc3", "787800" } },
-        { QUESTMSG, { ":/icons/question-hex.svg", "b5b6ff", "2f32ff" } },
-        { ERMESSAGE, { ":/icons/err-hex.svg", "ffd4d4", "740000" } },
-        { NEXTMSG, { ":/icons/next-hex.svg", "d6ffce", "105b00" } },
-        { WITHOUTANYBUTTONS, { ":/icons/ordinary-hex.svg", "f3ffc5", "475800" } },
-    };
     setAttribute(Qt::WA_DeleteOnClose);
-    QString backgroundColor = "{background-color: #"
-        + (StyleLoader::styleName().compare("Dark") ? map[type].bgrdColorLight : map[type].bgrdColorDark) + " };";
-    setStyleSheet("QDialog " + backgroundColor);
-    w->setStyleSheet("QWidget " + backgroundColor);
-    if (type < c_captions.size())
-        setWindowTitle(c_captions.at(type));
+
     QVBoxLayout *lyout = new QVBoxLayout;
     QHBoxLayout *hlyout = new QHBoxLayout;
 
-    auto icon = GraphFunc::newIcon(parent, map[type].pxFile);
-    icon->setStyleSheet("QWidget " + backgroundColor);
-    hlyout->addWidget(icon);
+    // auto icon = GraphFunc::newIcon(parent, map[type].pxFile);
+    // hlyout->addWidget(icon);
+
     hlyout->addWidget(w);
     lyout->addLayout(hlyout);
+
     hlyout = new QHBoxLayout;
     hlyout->addStretch(100);
+
     if (type == EPopup::QUESTMSG)
     {
         hlyout->addWidget(PBFunc::New(parent, "", "Да", this, &EPopup::acceptSlot));
@@ -76,10 +60,13 @@ void EPopup::create(MessageTypes &type, QWidget *w, QWidget *parent)
     }
     else if (type != EPopup::WITHOUTANYBUTTONS)
         hlyout->addWidget(PBFunc::New(parent, "", "Далее", [&] { this->aboutToClose(); }));
+
     hlyout->addStretch(100);
     lyout->addLayout(hlyout);
     setLayout(lyout);
     this->adjustSize();
+
+    setSizeGripEnabled(false);
 }
 
 void EPopup::aboutToClose()
@@ -116,4 +103,46 @@ void EPopup::cancelSlot()
 {
     emit cancelled();
     aboutToClose();
+}
+
+void EPopup::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    int m_borderWidth = 2;
+    Qt::Orientation m_gradientOrientation = Qt::Horizontal;
+    QColor m_gradientColor1 = map[type].firstColor;  // Синий
+    QColor m_gradientColor2 = map[type].secondColor; // Фиолетовый
+
+    // Создаем внешний путь с закругленными углами
+    QPainterPath outerPath;
+    outerPath.addRoundedRect(rect(), 12, 12);
+
+    // Создаем внутренний путь (меньше на толщину рамки)
+    QRectF innerRect = rect().adjusted(m_borderWidth, m_borderWidth, -m_borderWidth, -m_borderWidth);
+    QPainterPath innerPath;
+    innerPath.addRoundedRect(innerRect, 12 - m_borderWidth, 12 - m_borderWidth);
+
+    // Создаем путь для рамки (разница между внешним и внутренним путями)
+    QPainterPath borderPath = outerPath - innerPath;
+
+    // Создаем градиент
+    QLinearGradient gradient;
+    if (m_gradientOrientation == Qt::Horizontal)
+    {
+        gradient.setStart(0, 0);
+        gradient.setFinalStop(width(), 0);
+    }
+    else
+    {
+        gradient.setStart(0, 0);
+        gradient.setFinalStop(0, height());
+    }
+    gradient.setColorAt(0, m_gradientColor1);
+    gradient.setColorAt(1, m_gradientColor2);
+
+    // Рисуем градиентную рамку
+    painter.fillPath(borderPath, gradient);
 }
