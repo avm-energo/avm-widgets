@@ -8,16 +8,21 @@ PasswordLineEdit::PasswordLineEdit(QWidget *parent, const QString &lename, QLine
 {
     QHBoxLayout *hlyout = new QHBoxLayout;
     QLineEdit *le = LEFunc::New(parent, lename);
+
     le->setEchoMode(echostyle);
     hlyout->addWidget(le, 10);
+
     QPushButton *pb = new QPushButton(parent);
     pb->setIcon(QIcon(":/icons/pswshow.png"));
+    pb->setAutoDefault(false);
+
     QObject::connect(pb, &QAbstractButton::clicked, le, [=] {
         if (le->echoMode() == QLineEdit::Normal)
             le->setEchoMode(QLineEdit::Password);
         else
             le->setEchoMode(QLineEdit::Normal);
     });
+
     hlyout->addWidget(pb, 0);
     setLayout(hlyout);
 }
