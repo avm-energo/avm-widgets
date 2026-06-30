@@ -105,6 +105,10 @@ QWidget *AnimatedPopup::createPopupWidget(const QString &message, const Level l)
     popup->setMaximumWidth(350);
     popup->ensurePolished();
 
+    // 350 - ширина попапа;
+    // 15 + 15 - левый и правый отступы contentLayout;
+    // 22 - ширина иконки
+    // 10 - отступ между иконкой и текстом
     int availableTextWidth = 350 - (15 + 12 + 15) - 22 - 10;
     int textHeight = textLabel->heightForWidth(availableTextWidth);
     int finalHeight = std::max(22, textHeight) + 12 + 12;
