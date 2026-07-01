@@ -1,3 +1,4 @@
+#include <avm-widgets/animatedpopup.h>
 #include <avm-widgets/emessagebox.h>
 #include <avm-widgets/epasswordpopup.h>
 #include <avm-widgets/lblfunc.h>
@@ -22,8 +23,19 @@ bool EMessageBox::password(QWidget *parent, const QString &hash)
 void EMessageBox::information(QWidget *parent, const QString &msg)
 {
     m_result = false;
-    auto popup = new EPopup(EPopup::INFOMESSAGE, msg, parent);
-    popup->exec();
+    AnimatedPopup::instance()->showPopup(msg, AnimatedPopup::Info, 5000);
+}
+
+void EMessageBox::warning(QWidget *parent, const QString &msg)
+{
+    m_result = false;
+    AnimatedPopup::instance()->showPopup(msg, AnimatedPopup::Warning, 5000);
+}
+
+void EMessageBox::error(QWidget *parent, const QString &msg)
+{
+    m_result = false;
+    AnimatedPopup::instance()->showPopup(msg, AnimatedPopup::Error, 5000);
 }
 
 bool EMessageBox::question(QWidget *parent, const QString &msg)
@@ -34,21 +46,6 @@ bool EMessageBox::question(QWidget *parent, const QString &msg)
     QObject::connect(popup, &EPopup::cancelled, [] { m_result = false; });
     popup->exec();
     return m_result;
-}
-
-void EMessageBox::warning(QWidget *parent, const QString &msg)
-{
-    m_result = false;
-    auto popup = new EPopup(EPopup::WARNMESSAGE, LBLFunc::New(parent, msg), parent);
-    popup->exec();
-}
-
-void EMessageBox::error(QWidget *parent, const QString &msg)
-{
-    m_result = false;
-    auto popup = new EPopup(EPopup::ERMESSAGE, msg, parent);
-    popup->setWindowFlag(Qt::WindowStaysOnTopHint, true);
-    popup->exec();
 }
 
 bool EMessageBox::next(QWidget *parent, const QString &msg)
